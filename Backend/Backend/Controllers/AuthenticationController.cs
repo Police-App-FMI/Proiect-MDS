@@ -1,0 +1,90 @@
+﻿using Backend.Models;
+using Backend.Models.DTOs;
+using Backend.Services.UserService;
+using Backend.Services.Token_JWT;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Backend.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Security.Cryptography;
+
+namespace Backend.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthenticationController : ControllerBase
+    {
+        private readonly IUserService _userService;
+        private readonly JwtTokenService _JwtToken;
+
+        public AuthenticationController(IUserService userService, JwtTokenService JwtToken)
+        {
+            _userService = userService;
+            _JwtToken = JwtToken;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] AuthenticationModel model)
+        {
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                username = model.username,
+                password = model.password,
+                DateCreated = DateTime.Now
+            };
+
+            var result = await _userService.CreateUserAsync(user);
+
+            if (result)
+            {
+                return Ok(new { message = "User registered successfully!" });
+            }
+
+            return BadRequest(new { message = "User registration failed." });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] AuthenticationModel model)
+        {
+            var user = _userService.GetUserByUsername(model.username);
+            if (user != null && VerifyPassword(model.password, user.password))
+            {
+                // Generarea token-ului JWT
+                var token = _JwtToken.GenerateToken(user);
+
+                return Ok(new { token = token });
+            }
+
+            return Unauthorized(new { message = "Username or password is incorrect" });
+        }
+
+        private bool VerifyPassword(string enteredPassword, string storedHash)
+        {
+            // Convertim hash-ul stocat într-un byte array
+            byte[] hashBytes = Convert.FromBase64String(storedHash);
+
+            // Extragem sarea din hash-ul stocat
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+
+            // Creăm un nou hash pentru parola introdusă folosind sarea stocată
+            var pbkdf2 = new Rfc2898DeriveBytes(enteredPassword, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            // Comparăm hash-urile
+            for (int i = 0; i < 20; i++)
+            {
+                if (hashBytes[i + 16] != hash[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+}
