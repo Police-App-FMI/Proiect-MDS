@@ -57,7 +57,7 @@ reduce_learning_rate = tf.keras.callbacks.ReduceLROnPlateau(factor = 0.9, monito
                                                             cooldown = 0, patience = 5, verbose = 1, min_lr = 1e-6)
 
 Epoch = 300
-Batch_Size = 64
+Batch_Size = 128
 history = model.fit(X_train, Y_train, validation_data = (X_test, Y_test), batch_size = Batch_Size, epochs = Epoch, callbacks=[model_checkpoint, reduce_learning_rate])
 
 model.load_weights(ckp_path)
@@ -68,5 +68,5 @@ tflite_model = converter.convert()
 with open("model.tflite", "wb") as f:
     f.write(tflite_model)
 
-prediction_val = model.predict(X_test, batch_size = 64)
-print(model.score(X_test, Y_test))
+prediction_val = model.predict(X_test, batch_size = 128)
+print(prediction_val)
