@@ -33,6 +33,8 @@ namespace Backend.Controllers
             {
                 Id = Guid.NewGuid(),
                 username = model.username,
+                profile_pic = model.profile_pic,
+                email = model.email,
                 password = model.password,
                 DateCreated = DateTime.Now
             };
@@ -56,7 +58,15 @@ namespace Backend.Controllers
                 // Generarea token-ului JWT
                 var token = _JwtToken.GenerateToken(user);
 
-                return Ok(new { token = token });
+                var userDetails = new
+                {
+                    Username = user.username,
+                    ProfilePic = user.profile_pic,
+                    Email = user.email,
+                    Token = token
+                };
+
+                return Ok(userDetails);
             }
 
             return Unauthorized(new { message = "Username or password is incorrect" });

@@ -9,6 +9,10 @@ namespace Backend.Models
         [Key]
         public string username { get; set; }
 
+        public string profile_pic { get; set; }
+
+        public string email { get; set; }
+
         private string _password;
         public string password
         {
