@@ -1,20 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:police_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<User_provider>(context);
+    final userEmail = userProvider.userEmail;
+    final userImage = userProvider.profilePic;
+    final userName = userProvider.userName;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: const Text('Baciu Rares'),
-            accountEmail: const Text('baciu.rares25@gmail.com'),
+            accountName: Text(userName ?? ''),
+            accountEmail: Text(userEmail ?? ''),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.asset('assets/images/poza.jpeg', width: 90, height: 90, fit: BoxFit.cover)
+                child: Image.network(
+                  userImage ?? '',
+                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null)
+                      return child;
+                    return CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                          : null,
+                    );
+                  },
+                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                    return Text('Nu se poate incarca imaginea');
+                  },
+                  width: 90, height: 90, fit: BoxFit.cover)
               )
             ),
             decoration: BoxDecoration(

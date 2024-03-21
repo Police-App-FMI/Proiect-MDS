@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:police_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget{
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<User_provider>(context);
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -29,7 +34,6 @@ class Login extends StatelessWidget{
                     const Text("Login", style: TextStyle(color: Colors.white, fontSize: 40)),
                     SizedBox(height: 10),
                     const Text("Welcome Back", style: TextStyle(color: Colors.white, fontSize: 18))
-
                 ],
               )
             ),
@@ -65,6 +69,7 @@ class Login extends StatelessWidget{
                                 border: Border(bottom: BorderSide(color: Colors.grey[200]!))
                               ),
                               child: TextFormField(
+                                controller: emailController,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 autocorrect: false,
                                 keyboardType: TextInputType.emailAddress,
@@ -89,6 +94,7 @@ class Login extends StatelessWidget{
                                 border: Border(bottom: BorderSide(color: Colors.grey[200]!))
                               ),
                               child: TextFormField(
+                                controller: passwordController,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 autocorrect: false,
                                 decoration: InputDecoration(
@@ -107,29 +113,28 @@ class Login extends StatelessWidget{
                                 },
                               ),
                             ),
+                            SizedBox(height: 40),
+                            Text("Forgot Password?", style: TextStyle(color: Colors.grey)),
+                            SizedBox(height: 40),
+                            InkWell(
+                              onTap:() => {
+                                userProvider.verifyLogin(context, emailController.text, passwordController.text)
+                              },
+                              child: Container(
+                              height: 50,
+                              margin: EdgeInsets.symmetric(horizontal: 50),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.blue[900]
+                              ),
+                              child: Center(
+                                child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))
+                              )
+                            ),
+                            )
                           ],
                         ),
                       ),
-
-                      SizedBox(height: 40),
-                      Text("Forgot Password?", style: TextStyle(color: Colors.grey)),
-                      SizedBox(height: 40),
-                      InkWell(
-                        onTap:() => {
-                          Navigator.pushReplacementNamed(context, 'home')
-                        },
-                        child: Container(
-                        height: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Colors.blue[900]
-                        ),
-                        child: Center(
-                          child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))
-                        )
-                      ),
-                      )
                     ],
                   )
                 )
