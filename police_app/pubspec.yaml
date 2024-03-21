@@ -38,6 +38,4 @@ flutter:
 
   uses-material-design: true
 
-  assets:
-    - assets/images/poza.jpeg
-    - assets/images/banner.jpg
+  
