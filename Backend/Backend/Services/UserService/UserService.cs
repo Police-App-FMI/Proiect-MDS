@@ -37,7 +37,7 @@ namespace Backend.Services.UserService
         public async Task<bool> CreateUserAsync(User users)
         {
             var user = _mapper.Map<User>(users);
-            if (GetUserByUsername(user.username) == null)
+            if (GetUserByUsername(user.username) == null && _userRepository.FindByEmail(user.email) == null)
             {
                 await _userRepository.AddAsync(user);
                 return true; // Returnează true dacă adăugarea a fost un succes

@@ -22,6 +22,11 @@ namespace Backend.Repositories.UserRepository
             return _table.FirstOrDefault(u => u.username.Equals(username));
         }
 
+        public User FindByEmail(string email) 
+        {
+            return _table.FirstOrDefault(u => u.email.Equals(email));
+        }
+
         public async Task UpdateAsync(User user)
         {
             _backendContext.Update(user);

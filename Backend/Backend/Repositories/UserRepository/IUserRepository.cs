@@ -7,6 +7,8 @@ namespace Backend.Repositories.UserRepository
     {
         User FindByUsername(string username);
 
+        public User FindByEmail(string email);
+
         List<User> FindAllActive();
         Task UpdateAsync(User user);
 

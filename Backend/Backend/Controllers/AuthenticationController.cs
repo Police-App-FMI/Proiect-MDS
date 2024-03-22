@@ -19,11 +19,13 @@ namespace Backend.Controllers
     {
         private readonly IUserService _userService;
         private readonly JwtTokenService _JwtToken;
+        private readonly BackendContext _backendcontext;
 
-        public AuthenticationController(IUserService userService, JwtTokenService JwtToken)
+        public AuthenticationController(IUserService userService, JwtTokenService JwtToken, BackendContext backendcontext)
         {
             _userService = userService;
             _JwtToken = JwtToken;
+            _backendcontext = backendcontext;
         }
 
         [HttpPost("register")]
@@ -32,9 +34,9 @@ namespace Backend.Controllers
             var user = new User
             {
                 Id = Guid.NewGuid(),
-                username = model.username,
+                username = model.input,
                 profile_pic = model.profile_pic,
-                email = model.email,
+                email = model.mail,
                 password = model.password,
                 DateCreated = DateTime.Now
             };
@@ -52,24 +54,50 @@ namespace Backend.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthenticationModel model)
         {
-            var user = _userService.GetUserByUsername(model.username);
-            if (user != null && VerifyPassword(model.password, user.password))
+            if(model.input.Contains('@'))
             {
-                // Generarea token-ului JWT
-                var token = _JwtToken.GenerateToken(user);
-
-                var userDetails = new
+                var user = await _backendcontext.Users
+                            .Where(p => p.email == model.input)
+                            .FirstOrDefaultAsync();
+                if (user != null && VerifyPassword(model.password, user.password))
                 {
-                    Username = user.username,
-                    ProfilePic = user.profile_pic,
-                    Email = user.email,
-                    Token = token
-                };
+                    // Generarea token-ului JWT
+                    var token = _JwtToken.GenerateToken(user);
 
-                return Ok(userDetails);
+                    var userDetails = new
+                    {
+                        Username = user.username,
+                        ProfilePic = user.profile_pic,
+                        Email = user.email,
+                        Token = token
+                    };
+
+                    return Ok(userDetails);
+                }
+
+                return Unauthorized(new { message = "Email or password is incorrect" });
             }
+            else
+            {
+                var user = _userService.GetUserByUsername(model.input);
+                if (user != null && VerifyPassword(model.password, user.password))
+                {
+                    // Generarea token-ului JWT
+                    var token = _JwtToken.GenerateToken(user);
 
-            return Unauthorized(new { message = "Username or password is incorrect" });
+                    var userDetails = new
+                    {
+                        Username = user.username,
+                        ProfilePic = user.profile_pic,
+                        Email = user.email,
+                        Token = token
+                    };
+
+                    return Ok(userDetails);
+                }
+
+                return Unauthorized(new { message = "Username or password is incorrect" });
+            }
         }
 
         private bool VerifyPassword(string enteredPassword, string storedHash)
