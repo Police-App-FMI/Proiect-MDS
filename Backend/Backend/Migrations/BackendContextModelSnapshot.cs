@@ -99,7 +99,7 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Models.User", b =>
                 {
-                    b.Property<string>("username")
+                    b.Property<string>("nume")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("DateCreated")
@@ -118,6 +118,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("lastActive")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -126,7 +129,11 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("username");
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("nume");
 
                     b.ToTable("Users");
                 });
