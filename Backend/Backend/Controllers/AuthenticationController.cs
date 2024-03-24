@@ -28,6 +28,52 @@ namespace Backend.Controllers
             _backendcontext = backendcontext;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _userService.GetAllUsers();
+
+            var List = users.Select(user => new
+            {
+                Nume = user.nume,
+                isOnline = user.IsOnline,
+                LastActive = user.lastActive,
+                Profile_Pic = user.profile_pic,
+            }).ToList();
+
+            return Ok(List);
+        }
+
+        [HttpPut("checkToken")]
+        [Authorize]
+        public async Task<IActionResult> CheckToken()
+        {
+            // Dacă utilizatorul este logat, se va ajunge aici și se va returna HTTP 200 (OK) şi se actualizează activitatea
+            
+            // Obținem ID-ul utilizatorului autentificat din claim-urile token-ului JWT
+            var jti = User.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Jti).Value;
+            Guid id = Guid.Parse(jti);
+            var user = await _userService.GetById(id);
+            user.lastActive = DateTime.Now;
+            _backendcontext.Users.Update(user);
+            await _backendcontext.SaveChangesAsync();
+            return Ok();
+            
+            // Altfel se va returna un HTTP 401 (Unauthorized) şi se va apela HttpPut Disconnect din Frontend
+        }
+
+        [HttpPut("disconnect")]
+        public async Task<IActionResult> Disconnect([FromBody] string nume)
+        {
+            var user = await _backendcontext.Users
+                        .Where(p => p.nume == nume)
+                        .FirstOrDefaultAsync();
+            user.lastActive = DateTime.Now - TimeSpan.FromMinutes(5);
+            _backendcontext.Users.Update(user);
+            await _backendcontext.SaveChangesAsync();
+            return Ok();
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] AuthenticationModel model)
         {
@@ -35,6 +81,7 @@ namespace Backend.Controllers
             {
                 Id = Guid.NewGuid(),
                 username = model.input,
+                nume = model.nume,
                 profile_pic = model.profile_pic,
                 email = model.mail,
                 password = model.password,
@@ -64,13 +111,18 @@ namespace Backend.Controllers
                     // Generarea token-ului JWT
                     var token = _JwtToken.GenerateToken(user);
 
+                    // Intoarcem datele relevante
                     var userDetails = new
                     {
-                        Username = user.username,
+                        Nume = user.nume,
                         ProfilePic = user.profile_pic,
                         Email = user.email,
                         Token = token
                     };
+                    // Actualizăm starea user-ului
+                    user.lastActive = DateTime.Now;
+                    _backendcontext.Users.Update(user);
+                    await _backendcontext.SaveChangesAsync();
 
                     return Ok(userDetails);
                 }
@@ -85,13 +137,18 @@ namespace Backend.Controllers
                     // Generarea token-ului JWT
                     var token = _JwtToken.GenerateToken(user);
 
+                    // Intoarcem datele relevante
                     var userDetails = new
                     {
-                        Username = user.username,
+                        Nume = user.nume,
                         ProfilePic = user.profile_pic,
                         Email = user.email,
                         Token = token
                     };
+                    // Actualizăm starea user-ului
+                    user.lastActive = DateTime.Now;
+                    _backendcontext.Users.Update(user);
+                    await _backendcontext.SaveChangesAsync();
 
                     return Ok(userDetails);
                 }
