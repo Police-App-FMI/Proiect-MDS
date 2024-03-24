@@ -1,4 +1,5 @@
 ﻿using Backend.Models.Base;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 
@@ -7,6 +8,8 @@ namespace Backend.Models
     public class User: BaseEntity
     {
         [Key]
+        public string nume { get; set; }
+
         public string username { get; set; }
 
         public string profile_pic { get; set; }
@@ -39,5 +42,20 @@ namespace Backend.Models
             string savedPasswordHash = Convert.ToBase64String(hashBytes);
             return savedPasswordHash;
         }
+
+        public DateTime? lastActive { get; set; }
+
+        public bool IsOnline
+        {
+            get
+            {
+                if (lastActive == null)
+                {
+                    return false;
+                }
+                return DateTime.Now - lastActive < TimeSpan.FromMinutes(5);
+            }
+        }
+
     }
 }
