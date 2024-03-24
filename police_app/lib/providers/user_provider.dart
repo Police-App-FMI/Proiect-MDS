@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:police_app/constants.dart';
+import 'package:police_app/api/constants.dart';
 
 final urlApi = url;
 
@@ -16,7 +16,7 @@ class User_provider with ChangeNotifier{
     final url1 = Uri.https(urlApi, '/api/Authentication/login');
 
     Map<String, dynamic> data = {
-      'email': email,
+      'input': email,
       'password': password,
     };
 
@@ -47,6 +47,23 @@ class User_provider with ChangeNotifier{
         ),
         );
       }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> getAllUsers(BuildContext context) async {
+    final url1 = Uri.https(urlApi, '/api/Authentication');
+
+    try{
+      final response = await http.get(url1);
+
+      if(response.body.isNotEmpty)
+      {
+        final data = jsonDecode(response.body);
+        
+      }
+
     } catch (e) {
       print('Error: $e');
     }
