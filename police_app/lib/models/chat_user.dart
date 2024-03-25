@@ -10,6 +10,7 @@ class ChatUser {
     this.name,
     this.profile_pic,
     this.email,
+    
   });
 
   String? username;

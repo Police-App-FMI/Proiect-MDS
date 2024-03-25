@@ -31,7 +31,7 @@ class User_provider with ChangeNotifier{
       );
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-        userName = jsonResponse['username'];
+        userName = jsonResponse['nume'];
         userEmail = jsonResponse['email'];
         profilePic = jsonResponse['profilePic'];
         token = jsonResponse['token'];

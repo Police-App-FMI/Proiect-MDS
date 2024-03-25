@@ -31,13 +31,19 @@ class _MyHomePageState extends State<Home> {
         child: FloatingActionButton(onPressed: (){}, child: const Icon(Icons.add_comment_rounded, color: Colors.white), backgroundColor: Color.fromARGB(255, 30, 64, 112),),
       ),
 
-      body: ListView.builder(
-        itemCount: 5,
-        padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * .02),
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-        return const ChatUserCard();
-      })
+      /*body: StreamBuilder(
+        stream:
+        builder: (context, snapshot) {
+          return ListView.builder(
+            itemCount: 5,
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * .02),
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return const ChatUserCard();
+            });
+        } 
+      )
+      */
     );
   }
 }
