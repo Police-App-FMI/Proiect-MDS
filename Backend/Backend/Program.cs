@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Backend.Services.ChatService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddRepositories();
 builder.Services.AddServices();
+
+builder.Services.AddHostedService<ChatCleanupService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
