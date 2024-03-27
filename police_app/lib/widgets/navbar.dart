@@ -40,8 +40,9 @@ class NavBar extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.blue,
               image: DecorationImage(
-                image: new AssetImage('assets/images/banner.jpg'),
-                fit: BoxFit.cover
+                image: NetworkImage(
+                  'https://github.com/Police-App-FMI/Proiect-MDS/blob/main/police_app/assets/images/banner.jpg?raw=true',),
+                fit: BoxFit.cover,
               )
             )
             ),
@@ -65,9 +66,8 @@ class NavBar extends StatelessWidget {
             title: Text('Call Reinforcements'),
             onTap: () => print('Call Reinforcements'),
           ),
-
         ]
-      )
+      ),
     );
   }
 }

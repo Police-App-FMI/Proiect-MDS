@@ -63,10 +63,10 @@ namespace Backend.Controllers
         }
 
         [HttpPut("disconnect")]
-        public async Task<IActionResult> Disconnect([FromBody] string nume)
+        public async Task<IActionResult> Disconnect([FromBody] DisconnectModel model)
         {
             var user = await _backendcontext.Users
-                        .Where(p => p.nume == nume)
+                        .Where(p => p.nume == model.nume)
                         .FirstOrDefaultAsync();
             user.lastActive = DateTime.Now - TimeSpan.FromMinutes(5);
             _backendcontext.Users.Update(user);

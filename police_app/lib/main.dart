@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:police_app/providers/user_provider.dart';
 import 'package:police_app/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import '../screens/login_screen.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -17,6 +20,8 @@ class MyHttpOverrides extends HttpOverrides{
 void main() {
   HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 }
 
 class MyApp extends StatelessWidget {
@@ -30,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => User_provider()),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
