@@ -17,7 +17,7 @@ class User_provider with ChangeNotifier{
   Timer? tokenTimer;
 
   void startTokenTimer(BuildContext context) {
-    tokenTimer = Timer.periodic(Duration(seconds: 10), (timer) {
+    tokenTimer = Timer.periodic(Duration(seconds: 45), (timer) {
       // Verifica token-ul periodic
       print("SALUUUUT");
       verifyToken(context);
@@ -48,35 +48,39 @@ class User_provider with ChangeNotifier{
   
   Future<void> disconnectUser(BuildContext context) async {
     final url1 = Uri.https(urlApi, '/api/Authentication/disconnect');
-  // Apel catre backend pentru deconectare
 
-  try {
-    final response = await http.put(
-      url1,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8', // Modificare tip de conținut
-      },
-      body: jsonEncode({
-        'name': userName
-      }),
-    );
-    if (response.statusCode == 200) {
-      userName = '';
-      userEmail = '';
-      profilePic = '';
-      token = '';
-      notifyListeners();
-      
-      navigatorKey.currentState?.pushReplacementNamed('login');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Nu s-a putut realiza deconectarea.'),
-          duration: Duration(seconds: 3),
-          backgroundColor: Colors.red,
-        ),
+    Map<String, String?> data = {
+      'nume': userName
+    };
+
+    String jsonData = jsonEncode(data);
+
+    try {
+      final response = await http.put(
+        url1,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonData
       );
-    }
+      if (response.statusCode == 200) {
+        userName = '';
+        userEmail = '';
+        profilePic = '';
+        token = '';
+        notifyListeners();
+      
+        cancelTokenTimer();
+        navigatorKey.currentState?.pushReplacementNamed('login');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Nu s-a putut realiza deconectarea.'),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
   } catch (e) {
     print('Error: $e');
   }
