@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:police_app/api/constants.dart';
+import 'dart:async';
+
+import 'package:police_app/main.dart';
 
 final urlApi = url;
 
@@ -11,6 +14,73 @@ class User_provider with ChangeNotifier{
   String? profilePic;
   String? token;
 
+  Timer? tokenTimer;
+
+  void startTokenTimer(BuildContext context) {
+    tokenTimer = Timer.periodic(Duration(seconds: 10), (timer) {
+      // Verifica token-ul periodic
+      print("SALUUUUT");
+      verifyToken(context);
+    });
+  }
+
+  void cancelTokenTimer() {
+    tokenTimer?.cancel();
+  }
+
+  Future<void> verifyToken(BuildContext context) async {
+    if (token != null) {
+      try {
+        final response = await http.put(
+          Uri.https(urlApi, '/api/Authentication/checkToken'),
+          headers: <String, String>{
+            'Authorization': 'Bearer $token',
+          },
+        );
+        if (response.statusCode == 401) {
+          disconnectUser(context);
+        }
+      } catch (e) {
+        print('Error: $e');
+      }
+    }
+  }
+  
+  Future<void> disconnectUser(BuildContext context) async {
+    final url1 = Uri.https(urlApi, '/api/Authentication/disconnect');
+  // Apel catre backend pentru deconectare
+
+  try {
+    final response = await http.put(
+      url1,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8', // Modificare tip de conținut
+      },
+      body: jsonEncode({
+        'name': userName
+      }),
+    );
+    if (response.statusCode == 200) {
+      userName = '';
+      userEmail = '';
+      profilePic = '';
+      token = '';
+      notifyListeners();
+      
+      navigatorKey.currentState?.pushReplacementNamed('login');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Nu s-a putut realiza deconectarea.'),
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
 
   Future<void> verifyLogin(BuildContext context, String email, String password) async {
     final url1 = Uri.https(urlApi, '/api/Authentication/login');
@@ -35,16 +105,19 @@ class User_provider with ChangeNotifier{
         userEmail = jsonResponse['email'];
         profilePic = jsonResponse['profilePic'];
         token = jsonResponse['token'];
+        print(token);
         notifyListeners();
+
+        startTokenTimer(context);
         
-        Navigator.pushReplacementNamed(context, 'home');
+        navigatorKey.currentState?.pushReplacementNamed('home');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Emailul sau parola sunt incorecte.'),
           duration: Duration(seconds: 3),
           backgroundColor: Colors.red,
-        ),
+          ),
         );
       }
     } catch (e) {
