@@ -1,8 +1,9 @@
-a = int(input())
+import os
 
-b = 0
-for i in range(a):
-	if (i + 1) % 2 == 0:
-		b += i + 1
+def verifica_video(video):
+    if os.path.isfile(video):
+        print("Fisierul video exista in directorul curent.")
+    else:
+        print("Fisierul video nu a fost gasit in directorul curent.")
 
-print(b)
+verifica_video('./Machine Learning/Face A.I/video.mp4')

@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\controllers\\carcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\controllers\\carcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\controllers\\facecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\controllers\\facecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\machine learning\\car a.i\\test.py||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\machine learning\\car a.i\\test.py||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,6 +27,7 @@
       "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\models\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\models\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,6 +40,8 @@
       "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+=======
+>>>>>>> Stashed changes
       "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\models\\individ.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\models\\individ.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -38,7 +57,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< Updated upstream
           "SelectedChildIndex": 6,
+=======
+          "SelectedChildIndex": 8,
+>>>>>>> Stashed changes
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,6 +81,7 @@
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 1,
               "Title": "ChatController.cs",
               "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\ChatController.cs",
@@ -110,6 +134,8 @@
             },
             {
               "$type": "Document",
+=======
+>>>>>>> Stashed changes
               "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Program.cs",
@@ -123,20 +149,97 @@
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 5,
+=======
+              "DocumentIndex": 4,
+              "Title": "AuthenticationController.cs",
+              "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\AuthenticationController.cs",
+              "RelativeDocumentMoniker": "Backend\\Controllers\\AuthenticationController.cs",
+              "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\AuthenticationController.cs",
+              "RelativeToolTip": "Backend\\Controllers\\AuthenticationController.cs",
+              "ViewState": "AQIAAFQAAAAAAAAAAAAowGEAAABNAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-08T11:39:59.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Backend\\Models\\User.cs",
+              "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\User.cs",
+              "RelativeToolTip": "Backend\\Models\\User.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAQwDwAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-08T12:30:50.249Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FaceController.cs",
+              "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\FaceController.cs",
+              "RelativeDocumentMoniker": "Backend\\Controllers\\FaceController.cs",
+              "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\FaceController.cs",
+              "RelativeToolTip": "Backend\\Controllers\\FaceController.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAQwCwAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-19T09:51:57.335Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CarController.cs",
+              "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\CarController.cs",
+              "RelativeDocumentMoniker": "Backend\\Controllers\\CarController.cs",
+              "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\CarController.cs",
+              "RelativeToolTip": "Backend\\Controllers\\CarController.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAQwCsAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-24T16:41:21.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "test.py",
+              "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Machine Learning\\Car A.I\\test.py",
+              "RelativeDocumentMoniker": "Backend\\Machine Learning\\Car A.I\\test.py",
+              "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Machine Learning\\Car A.I\\test.py",
+              "RelativeToolTip": "Backend\\Machine Learning\\Car A.I\\test.py",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2024-03-24T16:48:02.967Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+>>>>>>> Stashed changes
               "Title": "Individ.cs",
               "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\Individ.cs",
               "RelativeDocumentMoniker": "Backend\\Models\\Individ.cs",
               "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\Individ.cs",
               "RelativeToolTip": "Backend\\Models\\Individ.cs",
+<<<<<<< Updated upstream
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAkAAAA",
+=======
+              "ViewState": "AQIAAAkAAAAAAAAAAAAxwBIAAAA+AAAA",
+>>>>>>> Stashed changes
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-05T10:37:58.186Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 6,
+=======
+              "DocumentIndex": 7,
+>>>>>>> Stashed changes
               "Title": "Autovehicul.cs",
               "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\Autovehicul.cs",
               "RelativeDocumentMoniker": "Backend\\Models\\Autovehicul.cs",

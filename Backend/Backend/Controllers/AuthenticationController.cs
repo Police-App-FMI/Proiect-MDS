@@ -137,7 +137,7 @@ namespace Backend.Controllers
                     // Generarea token-ului JWT
                     var token = _JwtToken.GenerateToken(user);
 
-                    // Intoarcem datele relevante
+                    // Întoarcem datele relevante
                     var userDetails = new
                     {
                         Nume = user.nume,
