@@ -63,15 +63,20 @@ namespace Backend.Controllers
         }
 
         [HttpPut("disconnect")]
-        public async Task<IActionResult> Disconnect([FromBody] string nume)
+        public async Task<IActionResult> Disconnect([FromBody] ChatModel nume)
         {
             var user = await _backendcontext.Users
-                        .Where(p => p.nume == nume)
+                        .Where(p => p.nume == nume.newMessage)
                         .FirstOrDefaultAsync();
-            user.lastActive = DateTime.Now - TimeSpan.FromMinutes(5);
-            _backendcontext.Users.Update(user);
-            await _backendcontext.SaveChangesAsync();
-            return Ok();
+            if (user != null)
+            {
+                user.lastActive = DateTime.Now;
+                user.IsOnline = false;
+                _backendcontext.Users.Update(user);
+                await _backendcontext.SaveChangesAsync();
+                return Ok();
+            }
+            else return BadRequest(new { message = "User-ul dat nu a fost găsit!" });
         }
 
         [HttpPost("register")]
@@ -121,6 +126,7 @@ namespace Backend.Controllers
                     };
                     // Actualizăm starea user-ului
                     user.lastActive = DateTime.Now;
+                    user.IsOnline = true;
                     _backendcontext.Users.Update(user);
                     await _backendcontext.SaveChangesAsync();
 
@@ -147,6 +153,7 @@ namespace Backend.Controllers
                     };
                     // Actualizăm starea user-ului
                     user.lastActive = DateTime.Now;
+                    user.IsOnline = true;
                     _backendcontext.Users.Update(user);
                     await _backendcontext.SaveChangesAsync();
 

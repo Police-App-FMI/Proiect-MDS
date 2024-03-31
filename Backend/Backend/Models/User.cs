@@ -45,6 +45,7 @@ namespace Backend.Models
 
         public DateTime? lastActive { get; set; }
 
+        private bool _isOnline;
         public bool IsOnline
         {
             get
@@ -53,9 +54,13 @@ namespace Backend.Models
                 {
                     return false;
                 }
-                return DateTime.Now - lastActive < TimeSpan.FromMinutes(5);
+                if(_isOnline)
+                {
+                    return DateTime.Now - lastActive < TimeSpan.FromMinutes(5);
+                }
+                else return _isOnline;
             }
+            set{ _isOnline = value; }
         }
-
     }
 }
