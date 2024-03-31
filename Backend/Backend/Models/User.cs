@@ -45,6 +45,7 @@ namespace Backend.Models
 
         public DateTime? lastActive { get; set; }
 
+        private bool _isOnline;
         public bool IsOnline
         {
             get
@@ -53,8 +54,10 @@ namespace Backend.Models
                 {
                     return false;
                 }
-                return DateTime.Now - lastActive < TimeSpan.FromMinutes(5);
+                // Verificăm dacă user-ul s-a autentificat cu succes şi dacă a avut activitate în ultimele 5 minute
+                return _isOnline && DateTime.Now - lastActive < TimeSpan.FromMinutes(5);
             }
+            set { _isOnline = value; }
         }
 
     }
