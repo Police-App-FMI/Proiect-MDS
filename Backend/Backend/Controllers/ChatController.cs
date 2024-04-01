@@ -39,7 +39,7 @@ namespace Backend.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> SendMessage([FromBody] string message)
+        public async Task<IActionResult> SendMessage([FromBody] ChatModel message)
         {
             // Obținem ID-ul utilizatorului autentificat din claim-urile token-ului JWT
             var jti = User.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Jti).Value;
@@ -51,7 +51,7 @@ namespace Backend.Controllers
                 Id = Guid.NewGuid(),
                 Nume = user.nume,
                 Profile_Pic = user.profile_pic,
-                Message = message,
+                Message = message.newMessage,
                 DateCreated = DateTime.Now
             };
             await _backendcontext.AddAsync(chat);
@@ -86,7 +86,7 @@ namespace Backend.Controllers
 
         [HttpDelete]
         [Authorize]
-        public async Task<IActionResult> DeleteMessage([FromBody] DateTime dateCreated)
+        public async Task<IActionResult> DeleteMessage([FromBody] ChatModel delete)
         {
             // Obținem ID-ul utilizatorului autentificat din claim-urile token-ului JWT
             var jti = User.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Jti).Value;
@@ -94,7 +94,7 @@ namespace Backend.Controllers
             var user = await _userService.GetById(id);
 
             var chat = _backendcontext.Chats
-                        .Where(p => p.Nume == user.nume && p.DateCreated == dateCreated)
+                        .Where(p => p.Nume == user.nume && p.DateCreated == delete.dateSend)
                         .FirstOrDefault();
 
             if (chat != null)

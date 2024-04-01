@@ -7,20 +7,16 @@
       "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\models\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\models\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|solutionrelative:backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4063B797-19FF-43AB-8217-0D8B252210DF}|Backend\\Backend.csproj|d:\\onedrive\\desktop\\op\u0163ional_lab\\proiect-mds\\backend\\backend\\models\\individ.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -57,29 +53,44 @@
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ChatController.cs",
               "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\ChatController.cs",
               "RelativeDocumentMoniker": "Backend\\Controllers\\ChatController.cs",
               "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\ChatController.cs",
               "RelativeToolTip": "Backend\\Controllers\\ChatController.cs",
-              "ViewState": "AQIAAFoAAAAAAAAAAAAowGYAAAA5AAAA",
+              "ViewState": "AQIAAFIAAAAAAAAAAAAkwGAAAABcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-25T18:12:59.627Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Chat.cs",
-              "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\Chat.cs",
-              "RelativeDocumentMoniker": "Backend\\Models\\Chat.cs",
-              "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\Chat.cs",
-              "RelativeToolTip": "Backend\\Models\\Chat.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-25T20:55:30.489Z",
               "EditorCaption": ""
             },
             {
@@ -90,20 +101,20 @@
               "RelativeDocumentMoniker": "Backend\\Controllers\\AuthenticationController.cs",
               "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Controllers\\AuthenticationController.cs",
               "RelativeToolTip": "Backend\\Controllers\\AuthenticationController.cs",
-              "ViewState": "AQIAAC0AAAAAAAAAAAAYwDsAAAAYAAAA",
+              "ViewState": "AQIAAKwAAAAAAAAAAAAwwCoAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-08T11:39:59.922Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\User.cs",
               "RelativeDocumentMoniker": "Backend\\Models\\User.cs",
               "ToolTip": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\User.cs",
               "RelativeToolTip": "Backend\\Models\\User.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAcwA4AAAAvAAAA",
+              "ViewState": "AQIAAC0AAAAAAAAAAIAwwDsAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-08T12:30:50.249Z",
               "EditorCaption": ""
@@ -118,12 +129,11 @@
               "RelativeToolTip": "Backend\\Program.cs",
               "ViewState": "AQIAAC0AAAAAAAAAAAAcwDsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-05T10:45:27.351Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-05T10:45:27.351Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "Individ.cs",
               "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\Individ.cs",
               "RelativeDocumentMoniker": "Backend\\Models\\Individ.cs",
@@ -131,12 +141,11 @@
               "RelativeToolTip": "Backend\\Models\\Individ.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-05T10:37:58.186Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-05T10:37:58.186Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "Autovehicul.cs",
               "DocumentMoniker": "D:\\OneDrive\\Desktop\\Op\u0163ional_Lab\\Proiect-MDS\\Backend\\Backend\\Models\\Autovehicul.cs",
               "RelativeDocumentMoniker": "Backend\\Models\\Autovehicul.cs",
