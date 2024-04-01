@@ -6,29 +6,30 @@ String userToJson(List<ChatUser> data) => json.encode(List<dynamic>.from(data.ma
 
 class ChatUser {
   ChatUser({
-    this.username,
-    this.name,
-    this.profile_pic,
-    this.email,
-    
+    required this.name,
+    required this.profilePic,
+    required this.message,
+    required this.dateSent
   });
 
-  String? username;
-  String? name;
-  String? profile_pic;
-  String? email;
+  final String? name;
+  final String? profilePic;
+  final String? message;
+  final DateTime dateSent;
 
   factory ChatUser.fromJson(Map<String, dynamic> json) => ChatUser(
-    username: json["username"],
-    profile_pic: json["profile_pic"],
-    email: json["email"],
-    name: json["name"],
+    profilePic: json["profile_pic"],
+    name: json["nume"],
+    message: json["message"],
+    dateSent: json["datesent"]
   );
 
   Map<String, dynamic> toJson() => {
     "username": username,
-    "profile_pic": profile_pic,
+    "profile_pic": profilePic,
     "email": email,
-    "name": name
+    "name": name,
+    "lastactive": lastActive,
+    "token": pushToken
   };
 }
