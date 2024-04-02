@@ -43,8 +43,6 @@ namespace Backend.Services.Token_JWT
                     // Attach user to context on successful jwt validation
                     context.Items["User"] = await userService.GetById(userId);
 
-                    var role = jwtToken.Claims.First(x => x.Type == ClaimTypes.Role).Value;
-
                     var claimsIdentity = new ClaimsIdentity(jwtToken.Claims, "jwt");
                     context.User = new ClaimsPrincipal(claimsIdentity);
                 }
