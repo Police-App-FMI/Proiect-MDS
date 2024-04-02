@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:police_app/providers/chat_provider.dart';
 import 'package:police_app/providers/user_provider.dart';
 import 'package:police_app/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,12 @@ class MyHttpOverrides extends HttpOverrides{
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ChatProvider(),
+      child: MyApp(),
+    )
+  );
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 }

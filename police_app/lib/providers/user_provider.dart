@@ -12,13 +12,12 @@ class User_provider with ChangeNotifier{
   String? userName;
   String? userEmail;
   String? profilePic;
-  String? token;
+  static String? token;
 
   Timer? tokenTimer;
 
   void startTokenTimer(BuildContext context) {
     tokenTimer = Timer.periodic(Duration(seconds: 45), (timer) {
-      // Verifica token-ul periodic
       print("SALUUUUT");
       verifyToken(context);
     });
@@ -114,7 +113,9 @@ class User_provider with ChangeNotifier{
 
         startTokenTimer(context);
         
-        navigatorKey.currentState?.pushReplacementNamed('home');
+        await Future.microtask(() {
+          navigatorKey.currentState?.pushReplacementNamed('home');
+        });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -129,21 +130,9 @@ class User_provider with ChangeNotifier{
     }
   }
 
-  Future<void> getAllUsers(BuildContext context) async {
-    final url1 = Uri.https(urlApi, '/api/Authentication');
-
-    try{
-      final response = await http.get(url1);
-
-      if(response.body.isNotEmpty)
-      {
-        final data = jsonDecode(response.body);
-        
-      }
-
-    } catch (e) {
-      print('Error: $e');
-    }
+  String? getJwtToken() {
+    return token;
   }
+
 
 }
