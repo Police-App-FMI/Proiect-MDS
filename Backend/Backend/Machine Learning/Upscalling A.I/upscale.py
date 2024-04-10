@@ -9,7 +9,7 @@ image = cv2.imread('./Machine Learning/Upscalling A.I/picture.jpg')
 # Deschiderea videoclipului
 cap = cv2.VideoCapture('./Machine Learning/Upscalling A.I/video.mp4')
 if image is not None:
-    # Încărcăm modelul EDSR pre-antrenat
+    # Încărcăm modelul FSRCNN pre-antrenat
     sr.readModel('./Machine Learning/Upscalling A.I/FSRCNN_x4.pb')
     # Setăm modelul și scale-ul
     sr.setModel('fsrcnn', 4)
