@@ -23,11 +23,14 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment:
+          isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: isCurrentUser ? _buildCurrentUserMessage(context) : _buildOtherUserMessage(context),
+          child: isCurrentUser
+              ? _buildCurrentUserMessage(context)
+              : _buildOtherUserMessage(context),
         ),
       ],
     );
@@ -35,7 +38,8 @@ class ChatMessage extends StatelessWidget {
 
   Widget _buildCurrentUserMessage(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
+      constraints:
+          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -83,7 +87,8 @@ class ChatMessage extends StatelessWidget {
 
   Widget _buildOtherUserMessage(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
+      constraints:
+          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -136,28 +141,27 @@ class ChatMessage extends StatelessWidget {
   }
 
   Widget _buildMessage(BuildContext context) {
-  if (mesaj != null) {
-    if (imageBytes != null) {
-      return Container(
-        width: 250, // Dimensiunea dorită pentru imagine (250x250)
-        height: 250,
-        child: Image.memory(
-          imageBytes!,
-          fit: BoxFit.cover,
-        ),
-      );
+    if (mesaj != null) {
+      if (imageBytes != null) {
+        return Container(
+          width: 250, // Dimensiunea dorită pentru imagine (250x250)
+          height: 250,
+          child: Image.memory(
+            imageBytes!,
+            fit: BoxFit.cover,
+          ),
+        );
+      } else {
+        return Flexible(
+          child: Text(
+            mesaj!,
+            style: TextStyle(color: Colors.black),
+            softWrap: true,
+          ),
+        );
+      }
     } else {
-      return Flexible(
-        child: Text(
-          mesaj!,
-          style: TextStyle(color: Colors.black),
-          softWrap: true,
-        ),
-      );
+      return SizedBox.shrink();
     }
-  } else {
-    return SizedBox.shrink();
   }
-}
-
 }

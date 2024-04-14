@@ -4310,19 +4310,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\bogda\\.nuget\\packages\\": {}
+    "C:\\Users\\baciu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\OneDrive\\Desktop\\Opţional_Lab\\Proiect-MDS\\Backend\\Backend\\Backend.csproj",
+      "projectUniqueName": "C:\\Users\\baciu\\Documents\\GitHub\\Proiect-MDS\\Backend\\Backend\\Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "D:\\OneDrive\\Desktop\\Opţional_Lab\\Proiect-MDS\\Backend\\Backend\\Backend.csproj",
-      "packagesPath": "C:\\Users\\bogda\\.nuget\\packages\\",
-      "outputPath": "D:\\OneDrive\\Desktop\\Opţional_Lab\\Proiect-MDS\\Backend\\Backend\\obj\\",
+      "projectPath": "C:\\Users\\baciu\\Documents\\GitHub\\Proiect-MDS\\Backend\\Backend\\Backend.csproj",
+      "packagesPath": "C:\\Users\\baciu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\baciu\\Documents\\GitHub\\Proiect-MDS\\Backend\\Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\bogda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\baciu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4342,11 +4342,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4407,7 +4402,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

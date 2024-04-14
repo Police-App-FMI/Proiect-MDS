@@ -94,8 +94,11 @@ namespace Backend.Controllers
             var user = await _userService.GetById(id);
 
             var chat = _backendcontext.Chats
-                    .Where(p => p.Nume == user.nume && (p.DateCreated == delete.dateSend || p.DateModified == delete.dateSend))
-                    .FirstOrDefault();
+            .AsEnumerable() // Extrage datele în memorie
+            .Where(p => p.Nume == user.nume &&
+                ((p.DateCreated.Value - delete.dateSend.Value).TotalMilliseconds <= 1 ||
+                (p.DateModified.Value - delete.dateSend.Value).TotalMilliseconds <= 1))
+            .FirstOrDefault();
 
             if (chat != null)
             {

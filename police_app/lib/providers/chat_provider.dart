@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -10,13 +11,11 @@ import 'package:police_app/providers/user_provider.dart';
 import 'package:path/path.dart' as path;
 
 class ChatProvider extends ChangeNotifier {
+  ChatProvider() {}
 
-  ChatProvider() {
-    
-  }
-
+  final _messageEventController = StreamController<void>.broadcast();
+  Stream<void> get messageEventStream => _messageEventController.stream;
   List<ChatUser> _chats = [];
-
 
   List<ChatUser> get chats {
     return [..._chats];
@@ -36,11 +35,10 @@ class ChatProvider extends ChangeNotifier {
       final List<ChatUser> loadedChats = [];
       extractedData.forEach((chatData) {
         loadedChats.add(ChatUser(
-          nume: chatData['nume'],
-          profile_Pic: chatData['profile_Pic'],
-          mesaj: chatData['mesaj'],
-          date_send: DateTime.parse(chatData['date_Send'])
-        ));
+            nume: chatData['nume'],
+            profile_Pic: chatData['profile_Pic'],
+            mesaj: chatData['mesaj'],
+            date_send: DateTime.parse(chatData['date_Send'])));
       });
       loadedChats.sort((a, b) => b.date_send.compareTo(a.date_send));
       _chats = loadedChats;
@@ -50,16 +48,18 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> loadMessages() async {
+    await fetchAndSetChats(); // sau orice altceva e necesar pentru a încărca mesajele
+  }
 
   Future<void> sendMessage(String newMessage) async {
     final token = User_provider().getJwtToken();
     final url1 = Uri.https(url, '/api/Chat');
     final Map<String, dynamic> data = {'newMessage': newMessage};
 
-    if(token == null) {
+    if (token == null) {
       throw Exception('JWT token not available');
     }
-
 
     final response = await http.post(
       url1,
@@ -72,6 +72,7 @@ class ChatProvider extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       print('Mesajul a fost trimis cu succes.');
+      _messageEventController.add(null);
     } else {
       throw Exception('Failed to send message: ${response.body}');
     }
@@ -81,11 +82,16 @@ class ChatProvider extends ChangeNotifier {
     final token = User_provider().getJwtToken();
     final url1 = Uri.https(url, '/api/Chat');
 
-    if(token == null) {
+    if (token == null) {
       throw Exception('JWT token not available');
     }
 
-    final String data = dateSend.toIso8601String();
+    final String dateSendToString = dateSend.toIso8601String();
+
+    final Map<String, dynamic> data = {
+      'newMessage': '',
+      'dateSend': dateSendToString
+    };
 
     final response = await http.delete(
       url1,
@@ -98,18 +104,17 @@ class ChatProvider extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       print('Mesajul a fost sters cu succes.');
-      await fetchAndSetChats();
+      _messageEventController.add(null);
     } else {
       throw Exception('Failed to delete message: ${response.body}');
     }
-
   }
 
   Future<void> changeMessage(DateTime dateSend, String newMessage) async {
     final token = User_provider().getJwtToken();
     final url1 = Uri.https(url, '/api/Chat');
 
-    if(token == null) {
+    if (token == null) {
       throw Exception('JWT token not available');
     }
 
@@ -131,6 +136,7 @@ class ChatProvider extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       print('Mesajul a fost schimbat cu succes.');
+      _messageEventController.add(null);
     } else {
       throw Exception('Failed to change message: ${response.body}');
     }
@@ -140,14 +146,13 @@ class ChatProvider extends ChangeNotifier {
     final picker = ImagePicker();
     final pickedImage = await picker.getImage(source: ImageSource.camera);
     if (pickedImage == null) return; // Utilizatorul a anulat
-    
+
     final File imageFile = File(pickedImage.path);
     List<int> imageBytes = await imageFile.readAsBytes();
 
-    if(imageBytes.isEmpty)
-    {
+    if (imageBytes.isEmpty) {
       print('Imaginea nu a putut fi citită corect din fișier.');
-    return;
+      return;
     }
     String base64Image = base64Encode(imageBytes);
 
@@ -160,35 +165,36 @@ class ChatProvider extends ChangeNotifier {
       throw Exception('Failed to save image: $error');
     }
   }
-  
+
   Future<void> selectAndStoreMultipleImages() async {
-  final ImagePicker picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
 
-  final List<XFile> images = await picker.pickMultiImage(imageQuality: 70);
+    final List<XFile> images = await picker.pickMultiImage(imageQuality: 70);
 
-  for(var i in images) {
-    File imageFile = File(i.path);
-    List<int> imageBytes = await imageFile.readAsBytes();
+    for (var i in images) {
+      File imageFile = File(i.path);
+      List<int> imageBytes = await imageFile.readAsBytes();
 
-    if(imageBytes.isEmpty)
-    {
-      print('Imaginea nu a putut fi citită corect din fișier.');
-    return;
-    }
-    String base64Image = base64Encode(imageBytes);
+      if (imageBytes.isEmpty) {
+        print('Imaginea nu a putut fi citită corect din fișier.');
+        return;
+      }
+      String base64Image = base64Encode(imageBytes);
 
-    String finalMessage = '[IMG]$base64Image';
+      String finalMessage = '[IMG]$base64Image';
 
-    try {
-      await sendMessage(finalMessage);
-      print('Imagine a fost salvat cu succes în baza de date.');
-    } catch (error) {
-      throw Exception('Failed to save image: $error');
+      try {
+        await sendMessage(finalMessage);
+        print('Imagine a fost salvat cu succes în baza de date.');
+      } catch (error) {
+        throw Exception('Failed to save image: $error');
+      }
     }
   }
 
-}
-
-
-
+  @override
+  void dispose() {
+    _messageEventController.close();
+    super.dispose();
+  }
 }

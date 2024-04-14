@@ -21,18 +21,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   void initState() {
     super.initState();
+    Provider.of<ChatProvider>(context, listen: false)
+        .messageEventStream
+        .listen((_) {
+      Provider.of<ChatProvider>(context, listen: false).fetchAndSetChats();
+    });
+    Provider.of<ChatProvider>(context, listen: false).fetchAndSetChats();
   }
 
   final TextEditingController _textController = TextEditingController();
   bool _showEmoji = false;
   bool _showOptionsDialog = true;
 
-@override
-@override
+  @override
+  @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<User_provider>(context);
     final currentUserNume = userProvider.userName;
@@ -64,12 +69,9 @@ class _HomeState extends State<Home> {
           body: Column(children: [
             Expanded(
               child: StreamBuilder(
-                stream: Provider.of<ChatProvider>(context, listen: false)
-                    .fetchAndSetChats()
-                    .asStream(),
+                stream: Stream.empty(),
                 builder: (ctx, chatSnapshot) {
-                  if (chatSnapshot.connectionState ==
-                      ConnectionState.waiting) {
+                  if (chatSnapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
@@ -86,7 +88,8 @@ class _HomeState extends State<Home> {
                               String? message = chatProvider.chats[i].mesaj;
                               Uint8List? imageBytes;
 
-                              if (message != null && message.startsWith('[IMG]')) {
+                              if (message != null &&
+                                  message.startsWith('[IMG]')) {
                                 message = message.replaceFirst('[IMG]', '');
                                 imageBytes = base64Decode(message);
                               } else if (message != null &&
@@ -99,13 +102,16 @@ class _HomeState extends State<Home> {
                                     vertical: 8.0, horizontal: 16.0),
                                 child: GestureDetector(
                                   onLongPress: () {
-                                    if (chatProvider.chats[i].nume == currentUserNume) {
-                                      if (chatProvider.chats[i].mesaj.startsWith('[IMG]')) {
+                                    if (chatProvider.chats[i].nume ==
+                                        currentUserNume) {
+                                      if (chatProvider.chats[i].mesaj
+                                          .startsWith('[IMG]')) {
                                         showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
                                             title: Text('Șterge mesajul'),
-                                            content: Text('Sigur dorești să ștergi acest mesaj?'),
+                                            content: Text(
+                                                'Sigur dorești să ștergi acest mesaj?'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () {
@@ -115,7 +121,12 @@ class _HomeState extends State<Home> {
                                               ),
                                               TextButton(
                                                 onPressed: () {
-                                                  Provider.of<ChatProvider>(context, listen: false).deleteMessage(chatProvider.chats[i].date_send);
+                                                  Provider.of<ChatProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .deleteMessage(
+                                                          chatProvider.chats[i]
+                                                              .date_send);
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: Text('Șterge'),
@@ -127,8 +138,10 @@ class _HomeState extends State<Home> {
                                         showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
-                                            title: Text('Șterge sau modifică mesajul'),
-                                            content: Text('Ce dorești să faci cu acest mesaj?'),
+                                            title: Text(
+                                                'Șterge sau modifică mesajul'),
+                                            content: Text(
+                                                'Ce dorești să faci cu acest mesaj?'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () {
@@ -138,14 +151,24 @@ class _HomeState extends State<Home> {
                                               ),
                                               TextButton(
                                                 onPressed: () {
-                                                  Navigator.of(context).pop(); // Ascunde dialogul actual
-                                                  _showEditMessageDialog(chatProvider.chats[i].mesaj, chatProvider.chats[i].date_send);
+                                                  Navigator.of(context)
+                                                      .pop(); // Ascunde dialogul actual
+                                                  _showEditMessageDialog(
+                                                      chatProvider
+                                                          .chats[i].mesaj,
+                                                      chatProvider
+                                                          .chats[i].date_send);
                                                 },
                                                 child: Text('Modifică'),
                                               ),
                                               TextButton(
                                                 onPressed: () {
-                                                  Provider.of<ChatProvider>(context, listen: false).deleteMessage(chatProvider.chats[i].date_send);
+                                                  Provider.of<ChatProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .deleteMessage(
+                                                          chatProvider.chats[i]
+                                                              .date_send);
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: Text('Șterge'),
@@ -156,14 +179,14 @@ class _HomeState extends State<Home> {
                                       }
                                     }
                                   },
-
                                   child: ChatMessage(
                                     nume: chatProvider.chats[i].nume,
                                     mesaj: message,
                                     imageBytes: imageBytes,
-                                    profilePic: chatProvider.chats[i].profile_Pic,
-                                    dateSend: DateFormat('dd/MM HH:mm')
-                                        .format(chatProvider.chats[i].date_send),
+                                    profilePic:
+                                        chatProvider.chats[i].profile_Pic,
+                                    dateSend: DateFormat('dd/MM HH:mm').format(
+                                        chatProvider.chats[i].date_send),
                                     isCurrentUser: chatProvider.chats[i].nume ==
                                         currentUserNume,
                                   ),
@@ -232,7 +255,8 @@ class _HomeState extends State<Home> {
                               border: InputBorder.none))),
                   IconButton(
                       onPressed: () async {
-                        Provider.of<ChatProvider>(context, listen: false).selectAndStoreMultipleImages();
+                        Provider.of<ChatProvider>(context, listen: false)
+                            .selectAndStoreMultipleImages();
                       },
                       icon: const Icon(Icons.image,
                           color: Colors.blueAccent, size: 26)),
@@ -256,8 +280,7 @@ class _HomeState extends State<Home> {
               _textController.clear();
             },
             minWidth: 0,
-            padding: EdgeInsets.only(
-                top: 10, bottom: 10, right: 5, left: 10),
+            padding: EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
             shape: CircleBorder(),
             color: Colors.green,
             child: Icon(Icons.send, color: Colors.white, size: 28),
@@ -268,42 +291,42 @@ class _HomeState extends State<Home> {
   }
 
   void _showEditMessageDialog(String currentMessage, DateTime dateSend) {
-  String newMessage = currentMessage.startsWith('[TXT]') ? currentMessage.substring(5) : currentMessage;
-  _showOptionsDialog = false; // Ascunde widgetul cu opțiuni
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Modifică mesajul'),
-        content: TextField(
-          onChanged: (value) {
-            newMessage = value;
-          },
-          controller: TextEditingController(text: newMessage),
-          decoration: InputDecoration(hintText: "Introdu mesajul nou"),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              _showOptionsDialog = true; // Afișează înapoi widgetul cu opțiuni
-              Navigator.of(context).pop();
+    String newMessage = currentMessage.startsWith('[TXT]')
+        ? currentMessage.substring(5)
+        : currentMessage;
+    _showOptionsDialog = false; // Ascunde widgetul cu opțiuni
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Modifică mesajul'),
+          content: TextField(
+            onChanged: (value) {
+              newMessage = value;
             },
-            child: Text('Anulează'),
+            controller: TextEditingController(text: newMessage),
+            decoration: InputDecoration(hintText: "Introdu mesajul nou"),
           ),
-          TextButton(
-            onPressed: () {
-              Provider.of<ChatProvider>(context, listen: false)
-                  .changeMessage(dateSend, '[TXT]$newMessage');
-              Navigator.of(context).pop();
-            },
-            child: Text('Submit'),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-
-
+          actions: [
+            TextButton(
+              onPressed: () {
+                _showOptionsDialog =
+                    true; // Afișează înapoi widgetul cu opțiuni
+                Navigator.of(context).pop();
+              },
+              child: Text('Anulează'),
+            ),
+            TextButton(
+              onPressed: () {
+                Provider.of<ChatProvider>(context, listen: false)
+                    .changeMessage(dateSend, '[TXT]$newMessage');
+                Navigator.of(context).pop();
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

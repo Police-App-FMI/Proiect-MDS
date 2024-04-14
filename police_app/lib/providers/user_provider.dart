@@ -8,7 +8,7 @@ import 'package:police_app/main.dart';
 
 final urlApi = url;
 
-class User_provider with ChangeNotifier{
+class User_provider with ChangeNotifier {
   String? userName;
   String? userEmail;
   String? profilePic;
@@ -44,31 +44,27 @@ class User_provider with ChangeNotifier{
       }
     }
   }
-  
+
   Future<void> disconnectUser(BuildContext context) async {
     final url1 = Uri.https(urlApi, '/api/Authentication/disconnect');
 
-    Map<String, String?> data = {
-      'nume': userName
-    };
+    Map<String, String?> data = {'nume': userName};
 
     String jsonData = jsonEncode(data);
 
     try {
-      final response = await http.put(
-        url1,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonData
-      );
+      final response = await http.put(url1,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonData);
       if (response.statusCode == 200) {
         userName = '';
         userEmail = '';
         profilePic = '';
         token = '';
         notifyListeners();
-      
+
         cancelTokenTimer();
         navigatorKey.currentState?.pushReplacementNamed('login');
       } else {
@@ -80,12 +76,13 @@ class User_provider with ChangeNotifier{
           ),
         );
       }
-  } catch (e) {
-    print('Error: $e');
+    } catch (e) {
+      print('Error: $e');
+    }
   }
-}
 
-  Future<void> verifyLogin(BuildContext context, String email, String password) async {
+  Future<void> verifyLogin(
+      BuildContext context, String email, String password) async {
     final url1 = Uri.https(urlApi, '/api/Authentication/login');
 
     Map<String, dynamic> data = {
@@ -112,16 +109,16 @@ class User_provider with ChangeNotifier{
         notifyListeners();
 
         startTokenTimer(context);
-        
+
         await Future.microtask(() {
           navigatorKey.currentState?.pushReplacementNamed('home');
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Emailul sau parola sunt incorecte.'),
-          duration: Duration(seconds: 3),
-          backgroundColor: Colors.red,
+          SnackBar(
+            content: Text('Emailul sau parola sunt incorecte.'),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
           ),
         );
       }
@@ -133,6 +130,4 @@ class User_provider with ChangeNotifier{
   String? getJwtToken() {
     return token;
   }
-
-
 }
