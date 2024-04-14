@@ -18,6 +18,10 @@ dependencies:
 
   cupertino_icons: ^1.0.6
   email_validator: ^2.1.17
+  intl: ^0.18.1
+  emoji_picker_flutter: ^1.6.4
+  image_picker: ^0.8.6
+
 
 dev_dependencies:
   flutter_test:
