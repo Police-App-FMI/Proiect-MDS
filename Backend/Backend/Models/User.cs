@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 
 namespace Backend.Models
 {
-    public class User: BaseEntity
+    public class User : BaseEntity
     {
         [Key]
         public string nume { get; set; }
@@ -60,5 +60,6 @@ namespace Backend.Models
             set { _isOnline = value; }
         }
 
+        public string? location { get; set; }
     }
 }
