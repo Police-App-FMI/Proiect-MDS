@@ -11,6 +11,8 @@ namespace Backend.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Chat> Chats { get; set; }
+        public DbSet<Reinforcement> Reinforcements { get; set; }
+        public DbSet<MissingPerson> MissingPersons { get; set; }
         public BackendContext(DbContextOptions<BackendContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

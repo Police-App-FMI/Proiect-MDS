@@ -38,7 +38,7 @@ namespace Backend.Controllers
                 Nume = user.nume,
                 isOnline = user.IsOnline,
                 LastActive = user.lastActive,
-                Profile_Pic = user.profile_pic,
+                Profile_Pic = user.profile_pic
             }).ToList();
             return Ok(List);
         }
@@ -71,6 +71,7 @@ namespace Backend.Controllers
             {
                 user.lastActive = DateTime.Now;
                 user.IsOnline = false;
+                user.location = null;
                 _backendcontext.Users.Update(user);
                 await _backendcontext.SaveChangesAsync();
                 return Ok();

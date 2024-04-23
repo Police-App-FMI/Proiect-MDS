@@ -11,6 +11,7 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ChatController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -38,7 +39,6 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> SendMessage([FromBody] ChatModel message)
         {
             // Obținem ID-ul utilizatorului autentificat din claim-urile token-ului JWT
@@ -61,7 +61,6 @@ namespace Backend.Controllers
         }
 
         [HttpPut]
-        [Authorize]
         public async Task<IActionResult> ChangeMessage([FromBody] ChatModel change)
         {
             // Obținem ID-ul utilizatorului autentificat din claim-urile token-ului JWT
@@ -85,7 +84,6 @@ namespace Backend.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
         public async Task<IActionResult> DeleteMessage([FromBody] ChatModel delete)
         {
             // Obținem ID-ul utilizatorului autentificat din claim-urile token-ului JWT
