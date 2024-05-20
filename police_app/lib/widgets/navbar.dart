@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:police_app/main.dart';
 import 'package:police_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,9 @@ class NavBar extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.videocam_outlined),
           title: Text('Video Face Recognition'),
-          onTap: () => print('Video Face Recognition'),
+          onTap: () => {
+            navigatorKey.currentState?.pushReplacementNamed('faceRecognition')
+          },
         ),
         ListTile(
           leading: Icon(Icons.car_crash_outlined),

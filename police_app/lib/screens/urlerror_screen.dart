@@ -4,7 +4,7 @@ import 'package:police_app/main.dart';
 import 'package:police_app/providers/chat_provider.dart';
 import 'package:provider/provider.dart';
 
-class UrlErrorScreen extends StatelessWidget {
+class UrlError extends StatelessWidget {
   final TextEditingController _urlController = TextEditingController();
 
   @override
