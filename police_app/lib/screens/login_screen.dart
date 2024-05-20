@@ -9,6 +9,7 @@ class Login extends StatelessWidget {
     final userProvider = Provider.of<User_provider>(context);
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    TextEditingController urlController = TextEditingController();
     return Scaffold(
         body: Container(
             width: double.infinity,
@@ -128,16 +129,42 @@ class Login extends StatelessWidget {
                                           },
                                         ),
                                       ),
-                                      SizedBox(height: 40),
-                                      Text("Forgot Password?",
-                                          style: TextStyle(color: Colors.grey)),
+                                      Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey[200]!))),
+                                        child: TextFormField(
+                                          controller: urlController,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          autocorrect: false,
+                                          decoration: InputDecoration(
+                                            hintText: "URL",
+                                            hintStyle:
+                                                TextStyle(color: Colors.grey),
+                                            border: InputBorder.none,
+                                          ),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return 'Please enter URL';
+                                            } else if (value.length < 3) {
+                                              return 'URL must be at least 3 characters long';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      ),
                                       SizedBox(height: 40),
                                       InkWell(
                                         onTap: () => {
                                           userProvider.verifyLogin(
                                               context,
                                               emailController.text,
-                                              passwordController.text)
+                                              passwordController.text,
+                                              urlController.text)
                                         },
                                         child: Container(
                                             height: 50,
@@ -153,7 +180,7 @@ class Login extends StatelessWidget {
                                                         color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.bold)))),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),

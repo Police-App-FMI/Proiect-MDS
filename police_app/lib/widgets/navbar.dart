@@ -60,6 +60,14 @@ class NavBar extends StatelessWidget {
           title: Text('Call Reinforcements'),
           onTap: () => print('Call Reinforcements'),
         ),
+        Divider(), // Linie de separare între opțiuni și butonul de logout
+        ListTile(
+          leading: Icon(Icons.logout),
+          title: Text('Logout'),
+          onTap: () {
+            userProvider.disconnectUser(context);
+          },
+        ),
       ]),
     );
   }

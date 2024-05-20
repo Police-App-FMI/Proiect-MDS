@@ -70,8 +70,11 @@ namespace Backend.Controllers
             var user = await _userService.GetById(id);
 
             var chat = _backendcontext.Chats
-                        .Where(p => p.Nume == user.nume && (p.DateCreated == change.dateSend || p.DateModified == change.dateSend))
-                        .FirstOrDefault();
+                        .AsEnumerable()
+                        .Where(p => p.Nume == user.nume &&
+                            ((p.DateCreated.Value - change.dateSend.Value).TotalMilliseconds <= 1 ||
+                            (p.DateModified.Value - change.dateSend.Value).TotalMilliseconds <= 1))
+                           .FirstOrDefault();
 
             if (chat != null)
             {
