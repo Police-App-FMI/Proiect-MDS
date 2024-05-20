@@ -1,5 +1,9 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿Backend/.vs/
 
-/.vs
+# Build directories
+Backend/Backend/bin/
+Backend/Backend/obj/
+
+# Database files
+Backend/Backend/database_MDS.mdf
+Backend/Backend/database_MDS_log.ldf
