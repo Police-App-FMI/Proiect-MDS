@@ -6,8 +6,6 @@ import 'dart:async';
 
 import 'package:police_app/main.dart';
 
-final urlApi = url;
-
 class User_provider with ChangeNotifier {
   String? userName;
   String? userEmail;
@@ -31,8 +29,9 @@ class User_provider with ChangeNotifier {
     if (token != null) {
       try {
         final response = await http.put(
-          Uri.https(urlApi, '/api/Authentication/checkToken'),
+          Uri.https(Constant.url, '/api/Authentication/checkToken'),
           headers: <String, String>{
+            'ngrok-skip-browser-warning': 'True',
             'Authorization': 'Bearer $token',
           },
         );
@@ -46,15 +45,19 @@ class User_provider with ChangeNotifier {
   }
 
   Future<void> disconnectUser(BuildContext context) async {
-    final url1 = Uri.https(urlApi, '/api/Authentication/disconnect');
+    final url1 = Uri.https(Constant.url, '/api/Authentication/disconnect');
 
-    Map<String, String?> data = {'nume': userName};
+    Map<String, String?> data = 
+    {
+      'newMessage': userName
+    };
 
     String jsonData = jsonEncode(data);
 
     try {
       final response = await http.put(url1,
           headers: <String, String>{
+            'ngrok-skip-browser-warning': 'True',
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonData);
@@ -81,9 +84,9 @@ class User_provider with ChangeNotifier {
     }
   }
 
-  Future<void> verifyLogin(
-      BuildContext context, String email, String password) async {
-    final url1 = Uri.https(urlApi, '/api/Authentication/login');
+  Future<void> verifyLogin(BuildContext context, String email, String password, String newUrl) async { 
+    Constant.url = newUrl;
+    final url1 = Uri.https(Constant.url, '/api/Authentication/login');
 
     Map<String, dynamic> data = {
       'input': email,
@@ -95,6 +98,7 @@ class User_provider with ChangeNotifier {
       final response = await http.post(
         url1,
         headers: <String, String>{
+          'ngrok-skip-browser-warning': 'True',
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonData,

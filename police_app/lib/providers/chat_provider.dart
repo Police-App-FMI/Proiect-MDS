@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:police_app/api/constants.dart';
+import 'package:police_app/main.dart';
 import 'package:police_app/models/chat_user.dart';
 import 'package:http/http.dart' as http;
 import 'package:police_app/providers/user_provider.dart';
@@ -22,9 +23,16 @@ class ChatProvider extends ChangeNotifier {
   }
 
   Future<void> fetchAndSetChats() async {
-    final url1 = Uri.https(url, '/api/Chat');
+    final token = User_provider().getJwtToken();
+    final url1 = Uri.https(Constant.url, '/api/Chat');
     try {
-      final response = await http.get(url1);
+      final response = await http.get(
+        url1,
+        headers: <String, String>{
+          'ngrok-skip-browser-warning': 'True',
+          'Authorization': 'Bearer $token'
+        }
+      ).timeout(Duration(seconds: 7));
       final responseData = json.decode(response.body) as Map<String, dynamic>;
       final extractedData = responseData['\$values'] as List<dynamic>;
 
@@ -43,9 +51,13 @@ class ChatProvider extends ChangeNotifier {
       loadedChats.sort((a, b) => b.date_send.compareTo(a.date_send));
       _chats = loadedChats;
       notifyListeners();
-    } catch (error) {
-      throw (error);
-    }
+    } on TimeoutException catch(_) {
+      _navigateToUrlErrorScreen();
+    } on SocketException catch(_) {
+      _navigateToUrlErrorScreen();
+    } catch(error) {
+      _navigateToUrlErrorScreen();
+    };
   }
 
   Future<void> loadMessages() async {
@@ -54,33 +66,36 @@ class ChatProvider extends ChangeNotifier {
 
   Future<void> sendMessage(String newMessage) async {
     final token = User_provider().getJwtToken();
-    final url1 = Uri.https(url, '/api/Chat');
+    final url1 = Uri.https(Constant.url, '/api/Chat');
     final Map<String, dynamic> data = {'newMessage': newMessage};
 
     if (token == null) {
       throw Exception('JWT token not available');
     }
 
-    final response = await http.post(
-      url1,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token'
-      },
-      body: jsonEncode(data),
-    );
-
-    if (response.statusCode == 200) {
-      print('Mesajul a fost trimis cu succes.');
+    try{
+      final response = await http.post(
+        url1,
+        headers: <String, String>{
+          'ngrok-skip-browser-warning': 'True',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode(data),
+      ).timeout(Duration(seconds: 7));
       _messageEventController.add(null);
-    } else {
-      throw Exception('Failed to send message: ${response.body}');
+    } on TimeoutException catch(_) {
+      _navigateToUrlErrorScreen();
+    } on SocketException catch(_) {
+      _navigateToUrlErrorScreen();
+    } catch(error) {
+      throw (error);
     }
   }
 
   Future<void> deleteMessage(DateTime dateSend) async {
     final token = User_provider().getJwtToken();
-    final url1 = Uri.https(url, '/api/Chat');
+    final url1 = Uri.https(Constant.url, '/api/Chat');
 
     if (token == null) {
       throw Exception('JWT token not available');
@@ -93,26 +108,30 @@ class ChatProvider extends ChangeNotifier {
       'dateSend': dateSendToString
     };
 
-    final response = await http.delete(
-      url1,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token'
-      },
-      body: jsonEncode(data),
-    );
-
-    if (response.statusCode == 200) {
-      print('Mesajul a fost sters cu succes.');
+    try{
+      final response = await http.delete(
+        url1,
+        headers: <String, String>{
+          'ngrok-skip-browser-warning': 'True',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode(data),
+      ).timeout(Duration(seconds: 7));
       _messageEventController.add(null);
-    } else {
-      throw Exception('Failed to delete message: ${response.body}');
+    } on TimeoutException catch(_) {
+      _navigateToUrlErrorScreen();
+    } on SocketException catch(_) {
+      _navigateToUrlErrorScreen();
+    } catch(error) {
+      throw (error);
     }
+
   }
 
   Future<void> changeMessage(DateTime dateSend, String newMessage) async {
     final token = User_provider().getJwtToken();
-    final url1 = Uri.https(url, '/api/Chat');
+    final url1 = Uri.https(Constant.url, '/api/Chat');
 
     if (token == null) {
       throw Exception('JWT token not available');
@@ -125,21 +144,21 @@ class ChatProvider extends ChangeNotifier {
       'newMessage': newMessage
     };
 
-    final response = await http.put(
-      url1,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token'
-      },
-      body: jsonEncode(data),
-    );
-
-    if (response.statusCode == 200) {
-      print('Mesajul a fost schimbat cu succes.');
+    try{
+      final response = await http.put(
+        url1,
+        headers: <String, String>{
+          'ngrok-skip-browser-warning': 'True',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode(data),
+      );
       _messageEventController.add(null);
-    } else {
-      throw Exception('Failed to change message: ${response.body}');
+    } catch(error) {
+      throw (error);
     }
+
   }
 
   Future<void> selectAndStoreImage() async {
@@ -190,6 +209,36 @@ class ChatProvider extends ChangeNotifier {
         throw Exception('Failed to save image: $error');
       }
     }
+  }
+
+  void _navigateToUrlErrorScreen() {
+    navigatorKey.currentState?.pushReplacementNamed('urlError');
+  }
+
+  Future<bool> checkServerAvailability(String updatedUrl) async {
+    Constant.url = updatedUrl;
+    final token = User_provider().getJwtToken();
+    final url1 = Uri.https(Constant.url, '/api/Chat');
+    try {
+      final response = await http.get(
+        url1,
+        headers: <String, String>{
+          'ngrok-skip-browser-warning': 'True',
+          'Authorization': 'Bearer $token'
+        }
+      ).timeout(Duration(seconds: 7));
+      
+      if(response.statusCode == 200) {
+        return true;
+      }
+    } on TimeoutException catch(_) {
+      return false;
+    } on SocketException catch(_) {
+      return false;
+    } catch (error) {
+      return false;
+    }
+    return false;
   }
 
   @override

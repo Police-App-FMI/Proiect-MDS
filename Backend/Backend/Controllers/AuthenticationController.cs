@@ -62,10 +62,10 @@ namespace Backend.Controllers
         }
 
         [HttpPut("disconnect")]
-        public async Task<IActionResult> Disconnect([FromBody] ChatModel model)
+        public async Task<IActionResult> Disconnect([FromBody] AuthenticationModel model)
         {
             var user = await _backendcontext.Users
-                        .Where(p => p.nume == model.newMessage)
+                        .Where(p => p.email == model.input)
                         .FirstOrDefaultAsync();
             if (user != null)
             {

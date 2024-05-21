@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:police_app/main.dart';
 import 'package:police_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,9 @@ class NavBar extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.videocam_outlined),
           title: Text('Video Face Recognition'),
-          onTap: () => print('Video Face Recognition'),
+          onTap: () => {
+            navigatorKey.currentState?.pushReplacementNamed('faceRecognition')
+          },
         ),
         ListTile(
           leading: Icon(Icons.car_crash_outlined),
@@ -59,6 +62,14 @@ class NavBar extends StatelessWidget {
           leading: Icon(Icons.people_alt_outlined),
           title: Text('Call Reinforcements'),
           onTap: () => print('Call Reinforcements'),
+        ),
+        Divider(), // Linie de separare între opțiuni și butonul de logout
+        ListTile(
+          leading: Icon(Icons.logout),
+          title: Text('Logout'),
+          onTap: () {
+            userProvider.disconnectUser(context);
+          },
         ),
       ]),
     );

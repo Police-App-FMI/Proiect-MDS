@@ -21,6 +21,8 @@ dependencies:
   intl: ^0.18.1
   emoji_picker_flutter: ^1.6.4
   image_picker: ^0.8.6
+  video_player: ^2.2.18
+  file_picker: ^5.2.2
 
 
 dev_dependencies:
