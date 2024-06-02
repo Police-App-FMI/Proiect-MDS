@@ -14,6 +14,9 @@ using System.Text.Json.Serialization;
 using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Backend.Services.ChatService;
+using Backend.SignalR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +56,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddSignalR();
 
 var dataDirectory = Directory.GetCurrentDirectory();
 AppContext.SetData("DataDirectory", dataDirectory);

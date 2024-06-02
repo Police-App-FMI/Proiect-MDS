@@ -7,3 +7,4 @@ Backend/Backend/obj/
 # Database files
 Backend/Backend/database_MDS.mdf
 Backend/Backend/database_MDS_log.ldf
+/.vs

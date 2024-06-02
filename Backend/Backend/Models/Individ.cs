@@ -16,6 +16,6 @@ namespace Backend.Models
         public DateTime Data_Nastere { get; set; }
         public string Adresa_Domiciliu { get; set; }
 
-        public ICollection<Autovehicul> Masinile { get; set; }
+        public ICollection<Autovehicul>? Masinile { get; set; }
     }
 }
