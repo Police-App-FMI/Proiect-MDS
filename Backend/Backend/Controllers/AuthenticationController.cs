@@ -29,6 +29,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetAllUsers();
@@ -62,10 +63,10 @@ namespace Backend.Controllers
         }
 
         [HttpPut("disconnect")]
-        public async Task<IActionResult> Disconnect([FromBody] AuthenticationModel model)
+        public async Task<IActionResult> Disconnect([FromBody] ChatModel model)
         {
             var user = await _backendcontext.Users
-                        .Where(p => p.email == model.input)
+                        .Where(p => p.nume == model.newMessage)
                         .FirstOrDefaultAsync();
             if (user != null)
             {

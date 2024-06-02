@@ -2,8 +2,10 @@
 using Backend.Models;
 using Backend.Models.DTOs;
 using Backend.Services.UserService;
+using Backend.SignalR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -16,11 +18,13 @@ namespace Backend.Controllers
     {
         private readonly IUserService _userService;
         private readonly BackendContext _backendcontext;
+        private readonly IHubContext<SRHub> _hubContext;
 
-        public ChatController(IUserService userService, BackendContext backendcontext)
+        public ChatController(IUserService userService, BackendContext backendcontext, IHubContext<SRHub> hubContext)
         {
             _userService = userService;
             _backendcontext = backendcontext;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -34,6 +38,11 @@ namespace Backend.Controllers
                         Mesaj = x.Message,
                         Date_Send = x.DateModified ?? x.DateCreated
                     }).ToListAsync();
+
+            foreach (var message in chat)
+            {
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", message.Nume, message.Profile_Pic, message.Mesaj, message.Date_Send);
+            }
 
             return Ok(chat);
         }
@@ -69,11 +78,11 @@ namespace Backend.Controllers
             var user = await _userService.GetById(id);
 
             var chat = _backendcontext.Chats
-                        .AsEnumerable()
-                        .Where(p => p.Nume == user.nume &&
-                            ((p.DateCreated.Value - change.dateSend.Value).TotalMilliseconds <= 1 ||
-                            (p.DateModified.Value - change.dateSend.Value).TotalMilliseconds <= 1))
-                           .FirstOrDefault();
+                    .AsEnumerable() // Extrage datele în memorie
+                    .Where(p => p.Nume == user.nume &&
+                        ((p.DateCreated.Value - change.dateSend.Value).TotalMilliseconds <= 1 ||
+                        (p.DateModified.Value - change.dateSend.Value).TotalMilliseconds <= 1))
+                    .FirstOrDefault();
 
             if (chat != null)
             {
@@ -95,11 +104,11 @@ namespace Backend.Controllers
             var user = await _userService.GetById(id);
 
             var chat = _backendcontext.Chats
-            .AsEnumerable() // Extrage datele în memorie
-            .Where(p => p.Nume == user.nume &&
-                ((p.DateCreated.Value - delete.dateSend.Value).TotalMilliseconds <= 1 ||
-                (p.DateModified.Value - delete.dateSend.Value).TotalMilliseconds <= 1))
-            .FirstOrDefault();
+                .AsEnumerable() // Extrage datele în memorie
+                .Where(p => p.Nume == user.nume &&
+                    ((p.DateCreated.Value - delete.dateSend.Value).TotalMilliseconds <= 1 ||
+                    (p.DateModified.Value - delete.dateSend.Value).TotalMilliseconds <= 1))
+                .FirstOrDefault();
 
             if (chat != null)
             {
