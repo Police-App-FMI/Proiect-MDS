@@ -184,7 +184,7 @@ class _HomeState extends State<Home> {
                                     mesaj: message,
                                     imageBytes: imageBytes,
                                     profilePic:
-                                        chatProvider.chats[i].profile_Pic,
+                                        chatProvider.chats[i].profile_Pic ?? "https://github.com/Police-App-FMI/Proiect-MDS/blob/main/police_app/assets/images/pozaRares.jpeg",
                                     dateSend: DateFormat('dd/MM HH:mm').format(
                                         chatProvider.chats[i].date_send),
                                     isCurrentUser: chatProvider.chats[i].nume ==

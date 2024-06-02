@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:police_app/main.dart';
 import 'package:video_player/video_player.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
@@ -26,6 +27,7 @@ class _FaceRecognitionScreenState extends State<FaceRecognition> {
         ..initialize().then((_) {
           setState(() {});
           _controller!.play();
+          _controller!.setVolume(0.0);
         });
     }
   }
@@ -33,6 +35,14 @@ class _FaceRecognitionScreenState extends State<FaceRecognition> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.pushNamed(context, 'home');
+          },
+        ),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -51,8 +61,9 @@ class _FaceRecognitionScreenState extends State<FaceRecognition> {
               ),
               SizedBox(height: 20),
               if (_controller != null && _controller!.value.isInitialized)
-                AspectRatio(
-                  aspectRatio: _controller!.value.aspectRatio,
+                Container(
+                  width: 300, // Lățimea dorită
+                  height: 300, // Menține aspectul raportului video
                   child: VideoPlayer(_controller!),
                 ),
             ],

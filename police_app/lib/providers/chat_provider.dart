@@ -215,8 +215,7 @@ class ChatProvider extends ChangeNotifier {
     navigatorKey.currentState?.pushReplacementNamed('urlError');
   }
 
-  Future<bool> checkServerAvailability(String updatedUrl) async {
-    Constant.url = updatedUrl;
+  Future<bool> checkServerAvailability() async {
     final token = User_provider().getJwtToken();
     final url1 = Uri.https(Constant.url, '/api/Chat');
     try {

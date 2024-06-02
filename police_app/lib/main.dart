@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
           'login': (_) => Login(),
           'home': (_) => Home(title: "Police App"),
           'urlError': (_) => UrlError(),
-          'faceRecognition': (_) => FaceRecognition(),
+          'faceRecognition': (_) => FaceRecognition()
         },
         initialRoute: 'login',
       ),

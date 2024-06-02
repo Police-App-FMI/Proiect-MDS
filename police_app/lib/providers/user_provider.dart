@@ -49,7 +49,8 @@ class User_provider with ChangeNotifier {
 
     Map<String, String?> data = 
     {
-      'newMessage': userName
+      'input': userEmail,
+      'password': ""
     };
 
     String jsonData = jsonEncode(data);
@@ -84,8 +85,7 @@ class User_provider with ChangeNotifier {
     }
   }
 
-  Future<void> verifyLogin(BuildContext context, String email, String password, String newUrl) async { 
-    Constant.url = newUrl;
+  Future<void> verifyLogin(BuildContext context, String email, String password) async { 
     final url1 = Uri.https(Constant.url, '/api/Authentication/login');
 
     Map<String, dynamic> data = {

@@ -18,15 +18,10 @@ class UrlError extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextField(
-                controller: _urlController,
-                decoration: InputDecoration(
-                  labelText: 'Type another server',
-                  labelStyle: TextStyle(color: Colors.white),
-                  border: OutlineInputBorder(),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
+              Text("The server went down", 
+                    style: TextStyle(
+                      color: Colors.white
+                    )),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
@@ -36,7 +31,7 @@ class UrlError extends StatelessWidget {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                  final response = await chatProvider.checkServerAvailability(_urlController.text);
+                  final response = await chatProvider.checkServerAvailability();
 
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
@@ -52,7 +47,7 @@ class UrlError extends StatelessWidget {
                     _urlController.text = "";
                   }
                 },
-                child: Text('Update URL'),
+                child: Text('Try to reconnect'),
               )
             ],
           ),
