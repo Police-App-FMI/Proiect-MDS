@@ -126,5 +126,10 @@ The `OnDutyController` is responsible for managing the "on duty" functionalities
 This controller uses the `IUserService` for user management and `BackendContext` for database operations.
 
 
+## The Machine Learning Part
+
+
+
+
 ## The Mobile Police App
 
