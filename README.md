@@ -127,8 +127,44 @@ This controller uses the `IUserService` for user management and `BackendContext`
 
 
 ## The Machine Learning Part
+<!-- Aici trebuie să faci introducerea cum am făcut-o eu mai sus la Backend API Rareş! -->
+### Upscalling A.I[^](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Machine%20Learning/Upscalling%20A.I/upscale.py)
 
+This script uses the DNN (Deep Neural Network) module from OpenCV to upscale images and videos. It uses pre-trained models for upscaling.
 
+##### How it works
+
+1. The script first creates a `DnnSuperResImpl` object.
+
+2. It then tries to open an image file and a video file.
+
+3. If the image file is opened successfully:
+    - The script loads the pre-trained FSRCNN model.
+    - It sets the model and scale.
+    - It performs the upscaling algorithm on the image.
+    - The upscaled image is then saved to memory.
+
+4. If the video file is opened successfully:
+    - The script loads the pre-trained ESPCN model (as it is faster than EDSR).
+    - It sets the model and scale.
+    - It gets the first frame of the video and performs the upscaling algorithm on it.
+    - It gets the dimensions of the upscaled frame.
+    - It creates a `VideoWriter` object with the dimensions of the upscaled frame and a frame rate of 24 (set by us).
+    - It writes the first upscaled frame to the output file.
+    - It then gets the total number of frames in the video.
+    - For each frame in the video, it performs the upscaling algorithm and writes the upscaled frame to the output file.
+    - Finally, it closes the files.
+
+If neither the image nor the video file is opened successfully, the script prints "False".
+
+##### Requirements
+
+- OpenCV
+- Pre-trained [FSRCNN](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Machine%20Learning/Upscalling%20A.I/FSRCNN_x4.pb) and [ESPCN](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Machine%20Learning/Upscalling%20A.I/ESPCN_x4.pb) models
+
+##### Usage
+
+Run the script in the same directory as your image and video files. Make sure to update the paths to the image, video, and model files in the script.
 
 
 ## The Mobile Police App
