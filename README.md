@@ -1,5 +1,30 @@
-# Proiect-MDS
-![Not Found!](https://github.com/Rares5000/Proiect-MDS/assets/76045639/01abeb99-98f4-49fc-bf59-b4b3b0f6f890)
+# Police Software
+
+PoliceSoft is a mobile application designed to enhance the efficiency and effectiveness of law enforcement officers in traffic operations. The app features communication, face and car plate recognition, on-duty management, and tools for handling missing persons.
+
+## Key Features
+
+- **General Chat**: Communication among officers.
+- **Face Recognition**: Extract personal information from government databases.
+- **Car Plate Recognition**: Retrieve vehicle details.
+- **On Duty Management**: Track on-duty officers and call for reinforcements.
+- **Missing Persons**: Report and view missing persons on a map.
+
+## Use Case Diagram
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/assets/76045639/22d145be-147a-4c3a-a739-7b494ff663c4)
+
+## User Stories
+- A police officer uses the application to identify if a person has had prior incidents, through facial recognition.
+- A police officer uses the application to identify if a car has all its documents in order, through license plate recognition.
+- In emergency situations, the application provides information on which officers are available, displaying a map to see who is closest.
+- A police officer is in danger and calls the nearest on-duty officers through the application.
+- Officers can use the application if a criminal has committed a crime and was recorded by a surveillance camera to check their identity.
+- Officers can use the application if a car appears suspicious to verify if the driver matches the owner.
+- Officers can use the application if a car appears suspicious to check if the car matches the license plate.
+- In the case of a serious road accident, the officer can call other units for assistance.
+- In the case of a car chase, the officer can check who the car belongs to and see information related to the driver.
+- The officer can use the application to see possible vehicles of a fugitive, preventing their escape.
+
 ## The Backend API
 
 Welcome to our project! Firstly, we will talk a bit about the backend API for our mobile application. The API is designed to interact with a database that includes the following tables:
