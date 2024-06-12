@@ -13,12 +13,12 @@ Welcome to our project! Firstly, we will talk a bit about the backend API for ou
 
 We have also implemented 6 controllers to facilitate data flow between the backend and frontend:
 
-- [**Authentication Controller**](https://github.com/Police-App-FMI/Proiect-MDS/main/README.md#authentication-controller): Implements the logic for user accounts, using extensively the features implemented in [UserService](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Services/UserService/UserService.cs).
-- [**Database Controller**](https://github.com/Police-App-FMI/Proiect-MDS/main/README.md#database-controller): Implements the logic for inserting data into the database.
+- [**Authentication Controller**](#authentication-controller): Implements the logic for user accounts, using extensively the features implemented in [UserService](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Services/UserService/UserService.cs).
+- [**Database Controller**](#database-controller): Implements the logic for inserting data into the database.
 - [**Car Controller**](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Controllers/CarController.cs): Implements the logic for license plate recognition.
 - [**Face Controller**](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Controllers/FaceController.cs): Implements the logic for facial recognition of individuals.
-- [**Chat Controller**](https://github.com/Police-App-FMI/Proiect-MDS/main/README.md#chat-controller): Implements the logic for sending, modifying, deleting, and receiving chat messages.
-- [**On Duty Controller**](https://github.com/Police-App-FMI/Proiect-MDS/main/README.md#on-duty-controller): Implements the logic for the Call Reinforcements, Missing Person, and GPS Location functionalities for users who are "On Duty".
+- [**Chat Controller**](#chat-controller): Implements the logic for sending, modifying, deleting, and receiving chat messages.
+- [**On Duty Controller**](#on-duty-controller): Implements the logic for the Call Reinforcements, Missing Person, and GPS Location functionalities for users who are "On Duty".
 
 ### Authentication Controller[^](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Controllers/AuthenticationController.cs)
 The `AuthenticationController` is responsible for user authentication and management. It includes the following methods:
