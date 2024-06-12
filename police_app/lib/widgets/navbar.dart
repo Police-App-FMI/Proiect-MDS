@@ -47,8 +47,8 @@ class NavBar extends StatelessWidget {
           onTap: () => print('Cops On-Doty'),
         ),
         ListTile(
-          leading: Icon(Icons.videocam_outlined),
-          title: Text('Video Face Recognition'),
+          leading: Icon(Icons.face),
+          title: Text('Face Recognition'),
           onTap: () => {
             navigatorKey.currentState?.pushReplacementNamed('faceRecognition')
           },
@@ -56,14 +56,16 @@ class NavBar extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.car_crash_outlined),
           title: Text('Plate Recognition'),
-          onTap: () => print('Plate Recognition'),
+          onTap: () => {
+            navigatorKey.currentState?.pushReplacementNamed('plateRecognition')
+          },
         ),
         ListTile(
           leading: Icon(Icons.people_alt_outlined),
           title: Text('Call Reinforcements'),
           onTap: () => print('Call Reinforcements'),
         ),
-        Divider(), // Linie de separare între opțiuni și butonul de logout
+        Divider(),
         ListTile(
           leading: Icon(Icons.logout),
           title: Text('Logout'),

@@ -14,6 +14,6 @@ namespace Backend.Models
 
         public double Kilometraj {  get; set; }
 
-        public Individ Propietar {  get; set; }
+        public Individ? Propietar {  get; set; }
     }
 }

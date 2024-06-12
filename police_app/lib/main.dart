@@ -6,6 +6,7 @@ import 'package:police_app/providers/chat_provider.dart';
 import 'package:police_app/providers/user_provider.dart';
 import 'package:police_app/screens/facerecognition_screen.dart';
 import 'package:police_app/screens/home_screen.dart';
+import 'package:police_app/screens/platerecognition_screen.dart';
 import 'package:police_app/screens/urlerror_screen.dart';
 import 'package:provider/provider.dart';
 import '../screens/login_screen.dart';
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
           'login': (_) => Login(),
           'home': (_) => Home(title: "Police App"),
           'urlError': (_) => UrlError(),
-          'faceRecognition': (_) => FaceRecognition()
+          'faceRecognition': (_) => FaceRecognition(),
+          'plateRecognition': (_) => PlateRecognition(),
         },
         initialRoute: 'login',
       ),

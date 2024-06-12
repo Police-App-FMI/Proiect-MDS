@@ -1,82 +1,166 @@
-﻿using Backend.Models.DTOs;
-using Microsoft.AspNetCore.Authorization;
+﻿using Backend.Data;
+using Backend.Models;
+using Backend.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
     public class FaceController : ControllerBase
     {
-        // Luăm path-ul către interpretorul de python şi script-ul de executat
-        private readonly string pythonPath = Path.Combine((string)AppContext.GetData("DataDirectory"), "venv", "Scripts", "python.exe");
-        private readonly string script = Path.Combine((string)AppContext.GetData("DataDirectory"), "Machine Learning", "Face A.I", "test.py");
-        private readonly string upscale = Path.Combine((string)AppContext.GetData("DataDirectory"), "Machine Learning", "Upscalling A.I", "upscale.py");
+        private readonly HttpClient _httpClient;
+        private readonly BackendContext _backendcontext;
 
-        [HttpPost]
-        public async Task<IActionResult> Face_Recognition(IFormFile video)
+        public FaceController(IHttpClientFactory httpClientFactory, BackendContext backendcontext)
         {
-            var extension = Path.GetExtension(video.FileName).ToLowerInvariant();
-            if (string.IsNullOrEmpty(extension) || ".mp4" != extension)
-            {
-                return BadRequest(new { message = "Fişierul primit este invalid sau corupt." });
-            }
-            var filePath = Path.Combine((string)AppContext.GetData("DataDirectory"), "Machine Learning", "Face A.I", "video.mp4");
-            using (var stream = System.IO.File.Create(filePath))
-            {
-                await video.CopyToAsync(stream);
-            }
-
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = pythonPath;
-            start.Arguments = string.Format("\"{0}\" \"{1}\"", script, "");
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            start.RedirectStandardInput = true;
-            using (Process process = Process.Start(start))
-            {
-                using (StreamReader reader = process.StandardOutput)
-                {
-                    string result = reader.ReadToEnd();
-                    System.IO.File.Delete(filePath);
-                    return Ok(result);
-                }
-            }
+            _httpClient = httpClientFactory.CreateClient();
+            _backendcontext = backendcontext;
         }
 
-        [HttpPost("test")]
-        public async Task<IActionResult> test(IFormFile video)
+        [HttpPost]
+        public async Task<IActionResult> Face_Recognition(IFormFile image)
         {
-            var extension = Path.GetExtension(video.FileName).ToLowerInvariant();
-            if (string.IsNullOrEmpty(extension) || ".mp4" != extension)
+            if (image == null || image.Length == 0)
+            {
+                return BadRequest(new { message = "No file uploaded" });
+            }
+
+            var extension = Path.GetExtension(image.FileName).ToLowerInvariant();
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+
+            if (string.IsNullOrEmpty(extension) || !allowedExtensions.Contains(extension))
             {
                 return BadRequest(new { message = "Fişierul primit este invalid sau corupt." });
             }
-            var filePath = Path.Combine((string)AppContext.GetData("DataDirectory"), "Machine Learning", "Upscalling A.I", "video.mp4");
-            using (var stream = System.IO.File.Create(filePath))
+
+            string contentType;
+            switch (extension)
             {
-                await video.CopyToAsync(stream);
+                case ".jpg":
+                    contentType = "image/jpg";
+                    break;
+                case ".jpeg":
+                    contentType = "image/jpeg";
+                    break;
+                case ".png":
+                    contentType = "image/png";
+                    break;
+                default:
+                    return BadRequest(new { message = "Unsupported file type." });
             }
 
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = pythonPath;
-            start.Arguments = string.Format("\"{0}\" \"{1}\"", upscale, "");
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            start.RedirectStandardInput = true;
-            using (Process process = Process.Start(start))
+            /*try
             {
-                using (StreamReader reader = process.StandardOutput)
+                using (var stream = new MemoryStream())
                 {
-                    string result = reader.ReadToEnd();
-                    System.IO.File.Delete(filePath);
-                    if (result != "False")
-                        return Ok(result);
-                    else return BadRequest(new { message = "Ceva a mers prost!" });
+                    await image.CopyToAsync(stream);
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    using (var requestContent = new StreamContent(stream))
+                    {
+                        requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+
+                        var response = await _httpClient.PostAsync("https://app-policesoft.azurewebsites.net/api/classify", requestContent);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var predictionResponse = await response.Content.ReadAsStringAsync();
+                            var predictionJson = JsonConvert.DeserializeObject<dynamic>(predictionResponse);
+
+                            using (JsonDocument doc = JsonDocument.Parse(predictionResponse))
+                            {
+                                var root = doc.RootElement;
+                                var prediction = root.GetProperty("prediction").GetString();
+
+                                var individ = await _backendcontext.Persoana.FirstOrDefaultAsync(i => i.Nume == prediction);
+
+                                if (individ == null)
+                                {
+                                    return NotFound("Persoana " + prediction + " nu exista in baza de date");
+                                }
+                                else
+                                {
+                                    return Ok(individ);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var errorContent = await response.Content.ReadAsStringAsync();
+                            Debug.WriteLine($"Error response from Python API: {errorContent}");
+                            return StatusCode((int)response.StatusCode, $"Imaginea nu a ajuns la API: {errorContent}");
+                        }
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+            */
+            try
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await image.CopyToAsync(stream);
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    var content = new ByteArrayContent(stream.ToArray());
+                    content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+
+                    var response = await _httpClient.PostAsync("https://app-policesoft.azurewebsites.net/api/classify", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var predictionResponse = await response.Content.ReadAsStringAsync();
+                        var predictionJson = JsonConvert.DeserializeObject<dynamic>(predictionResponse);
+
+                        using (JsonDocument doc = JsonDocument.Parse(predictionResponse))
+                        {
+                            var root = doc.RootElement;
+                            var prediction = root.GetProperty("prediction").GetString();
+
+                            Console.WriteLine(prediction);
+
+                            var individ = await _backendcontext.Persoana.Include(m => m.Masinile).FirstOrDefaultAsync(i => i.Nume == prediction);
+
+                            if (individ != null && individ.Masinile != null && individ.Masinile.Count > 0)
+                            {
+                                foreach (var masina in individ.Masinile)
+                                {
+                                    masina.Propietar = null;
+                                }
+                            }
+
+                            if (individ == null)
+                            {
+                                return NotFound("Persoana " + prediction + " nu exista in baza de date");
+                            }
+                            else
+                            {
+                                return Ok(individ);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        Debug.WriteLine($"Error response from Python API: {errorContent}");
+                        return StatusCode((int)response.StatusCode, $"Imaginea nu a ajuns la API: {errorContent}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }

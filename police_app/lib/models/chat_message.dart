@@ -79,7 +79,7 @@ class ChatMessage extends StatelessWidget {
               SizedBox(width: 4.0),
             ],
           ),
-          SizedBox(height: 4.0), // Spacing between name and profile picture
+          SizedBox(height: 4.0),
         ],
       ),
     );
@@ -127,7 +127,7 @@ class ChatMessage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 4.0), // Spacing between profile picture and message
+          SizedBox(height: 4.0),
         ],
       ),
     );
@@ -144,7 +144,7 @@ class ChatMessage extends StatelessWidget {
     if (mesaj != null) {
       if (imageBytes != null) {
         return Container(
-          width: 250, // Dimensiunea dorită pentru imagine (250x250)
+          width: 250,
           height: 250,
           child: Image.memory(
             imageBytes!,

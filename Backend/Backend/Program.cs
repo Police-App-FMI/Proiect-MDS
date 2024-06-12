@@ -45,6 +45,8 @@ builder.Services.AddSingleton<JwtTokenService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddHttpClient();
+
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 
@@ -64,11 +66,16 @@ AppContext.SetData("DataDirectory", dataDirectory);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.Use(async (context, next) =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    var httpClientFactory = context.RequestServices.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient();
+
+    await next();
+});
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
