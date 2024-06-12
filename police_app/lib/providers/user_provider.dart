@@ -6,7 +6,9 @@ import 'dart:async';
 
 import 'package:police_app/main.dart';
 
+// Definirea unei clase User_provider care implementează ChangeNotifier
 class User_provider with ChangeNotifier {
+  // Variabile pentru a stoca informațiile utilizatorului
   String? userName;
   String? userEmail;
   String? profilePic;
@@ -14,6 +16,7 @@ class User_provider with ChangeNotifier {
 
   Timer? tokenTimer;
 
+  // Funcție pentru a porni un timer care verifică token-ul periodic
   void startTokenTimer(BuildContext context) {
     tokenTimer = Timer.periodic(Duration(seconds: 45), (timer) {
       print("SALUUUUT");
@@ -21,10 +24,12 @@ class User_provider with ChangeNotifier {
     });
   }
 
+  // Funcție pentru a opri timer-ul
   void cancelTokenTimer() {
     tokenTimer?.cancel();
   }
 
+  // Funcție pentru a verifica token-ul utilizatorului
   Future<void> verifyToken(BuildContext context) async {
     if (token != null) {
       try {
@@ -35,6 +40,7 @@ class User_provider with ChangeNotifier {
             'Authorization': 'Bearer $token',
           },
         );
+        // Dacă token-ul nu este valid, deconectează utilizatorul
         if (response.statusCode == 401) {
           disconnectUser(context);
         }
@@ -44,23 +50,26 @@ class User_provider with ChangeNotifier {
     }
   }
 
+  // Funcție pentru a deconecta utilizatorul
   Future<void> disconnectUser(BuildContext context) async {
     final url1 = Uri.https(Constant.url, '/api/Authentication/disconnect');
 
-    Map<String, String?> data = 
-    {
-      'newMessage': userName
+    Map<String, String?> data = {
+      'newMessage': userName,
     };
 
     String jsonData = jsonEncode(data);
 
     try {
-      final response = await http.put(url1,
-          headers: <String, String>{
-            'ngrok-skip-browser-warning': 'True',
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonData);
+      final response = await http.put(
+        url1,
+        headers: <String, String>{
+          'ngrok-skip-browser-warning': 'True',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonData,
+      );
+      // Dacă deconectarea a avut succes, resetează informațiile utilizatorului
       if (response.statusCode == 200) {
         userName = '';
         userEmail = '';
@@ -84,8 +93,8 @@ class User_provider with ChangeNotifier {
     }
   }
 
-  Future<void> verifyLogin(BuildContext context, String email, String password, String newUrl) async { 
-    Constant.url = newUrl;
+  // Funcție pentru a verifica login-ul utilizatorului
+  Future<void> verifyLogin(BuildContext context, String email, String password) async { 
     final url1 = Uri.https(Constant.url, '/api/Authentication/login');
 
     Map<String, dynamic> data = {
@@ -103,6 +112,7 @@ class User_provider with ChangeNotifier {
         },
         body: jsonData,
       );
+      // Dacă login-ul este reușit, actualizează informațiile utilizatorului
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = jsonDecode(response.body);
         userName = jsonResponse['nume'];
@@ -131,6 +141,7 @@ class User_provider with ChangeNotifier {
     }
   }
 
+  // Funcție pentru a obține token-ul JWT
   String? getJwtToken() {
     return token;
   }

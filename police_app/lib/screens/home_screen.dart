@@ -11,6 +11,7 @@ import 'package:police_app/providers/user_provider.dart';
 import 'package:police_app/widgets/navbar.dart';
 import 'package:provider/provider.dart';
 
+// Widget principal pentru Home
 class Home extends StatefulWidget {
   const Home({Key? key, required this.title}) : super(key: key);
 
@@ -24,6 +25,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    // Ascultă evenimentele de mesaje și actualizează chat-urile
     Provider.of<ChatProvider>(context, listen: false)
         .messageEventStream
         .listen((_) {
@@ -32,17 +34,17 @@ class _HomeState extends State<Home> {
     Provider.of<ChatProvider>(context, listen: false).fetchAndSetChats();
   }
 
-  final TextEditingController _textController = TextEditingController();
-  bool _showEmoji = false;
-  bool _showOptionsDialog = true;
+  final TextEditingController _textController = TextEditingController(); // Controller pentru textul mesajului
+  bool _showEmoji = false; // Afișează/ascunde picker-ul de emoji
+  bool _showOptionsDialog = true; // Afișează/ascunde dialogul cu opțiuni
 
   @override
-  @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<User_provider>(context);
-    final currentUserNume = userProvider.userName;
+    final userProvider = Provider.of<User_provider>(context); // Provider pentru utilizator
+    final currentUserNume = userProvider.userName; // Numele utilizatorului curent
+
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(), // Ascunde tastatura la tap pe ecran
       child: WillPopScope(
         onWillPop: () {
           if (_showEmoji) {
@@ -54,7 +56,7 @@ class _HomeState extends State<Home> {
             return Future.value(true);
         },
         child: Scaffold(
-          drawer: NavBar(),
+          drawer: NavBar(), // Bara de navigare
           appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 30, 64, 112),
             title: const Text(
@@ -69,25 +71,26 @@ class _HomeState extends State<Home> {
           body: Column(children: [
             Expanded(
               child: StreamBuilder(
-                stream: Stream.empty(),
+                stream: Stream.empty(), // Stream-ul pentru mesaje
                 builder: (ctx, chatSnapshot) {
                   if (chatSnapshot.connectionState == ConnectionState.waiting) {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(), // Indicator de încărcare
                     );
                   } else {
                     if (chatSnapshot.error != null) {
                       print(chatSnapshot.error);
-                      return Center(child: Text('An error occurred!'));
+                      return Center(child: Text('An error occurred!')); // Mesaj de eroare
                     } else {
                       return Consumer<ChatProvider>(
                         builder: (ctx, chatProvider, _) {
                           return ListView.builder(
-                            itemCount: chatProvider.chats.length,
+                            itemCount: chatProvider.chats.length, // Numărul de mesaje
                             itemBuilder: (ctx, i) {
                               String? message = chatProvider.chats[i].mesaj;
                               Uint8List? imageBytes;
 
+                              // Decodifică mesajele de tip imagine
                               if (message != null &&
                                   message.startsWith('[IMG]')) {
                                 message = message.replaceFirst('[IMG]', '');
@@ -102,6 +105,7 @@ class _HomeState extends State<Home> {
                                     vertical: 8.0, horizontal: 16.0),
                                 child: GestureDetector(
                                   onLongPress: () {
+                                    // Dialog pentru ștergerea sau modificarea mesajelor
                                     if (chatProvider.chats[i].nume ==
                                         currentUserNume) {
                                       if (chatProvider.chats[i].mesaj
@@ -126,7 +130,7 @@ class _HomeState extends State<Home> {
                                                           listen: false)
                                                       .deleteMessage(
                                                           chatProvider.chats[i]
-                                                              .date_send);
+                                                              .date_send); // Șterge mesajul
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: Text('Șterge'),
@@ -152,12 +156,12 @@ class _HomeState extends State<Home> {
                                               TextButton(
                                                 onPressed: () {
                                                   Navigator.of(context)
-                                                      .pop(); // Ascunde dialogul actual
+                                                      .pop();
                                                   _showEditMessageDialog(
                                                       chatProvider
                                                           .chats[i].mesaj,
                                                       chatProvider
-                                                          .chats[i].date_send);
+                                                          .chats[i].date_send); // Dialog pentru modificarea mesajului
                                                 },
                                                 child: Text('Modifică'),
                                               ),
@@ -168,7 +172,7 @@ class _HomeState extends State<Home> {
                                                           listen: false)
                                                       .deleteMessage(
                                                           chatProvider.chats[i]
-                                                              .date_send);
+                                                              .date_send); // Șterge mesajul
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: Text('Șterge'),
@@ -184,11 +188,11 @@ class _HomeState extends State<Home> {
                                     mesaj: message,
                                     imageBytes: imageBytes,
                                     profilePic:
-                                        chatProvider.chats[i].profile_Pic,
+                                        chatProvider.chats[i].profile_Pic ?? "https://github.com/Police-App-FMI/Proiect-MDS/blob/main/police_app/assets/images/pozaRares.jpeg",
                                     dateSend: DateFormat('dd/MM HH:mm').format(
                                         chatProvider.chats[i].date_send),
                                     isCurrentUser: chatProvider.chats[i].nume ==
-                                        currentUserNume,
+                                        currentUserNume, // Verifică dacă mesajul este al utilizatorului curent
                                   ),
                                 ),
                               );
@@ -201,12 +205,12 @@ class _HomeState extends State<Home> {
                 },
               ),
             ),
-            _chatInput(),
+            _chatInput(), // Widget pentru introducerea mesajului
             if (_showEmoji)
               SizedBox(
                 height: MediaQuery.of(context).size.height * .35,
                 child: EmojiPicker(
-                  textEditingController: _textController,
+                  textEditingController: _textController, // Picker de emoji-uri
                   config: Config(
                     columns: 7,
                     emojiSizeMax: 32 *
@@ -220,6 +224,7 @@ class _HomeState extends State<Home> {
     );
   }
 
+  // Widget pentru introducerea mesajului
   Widget _chatInput() {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -236,13 +241,13 @@ class _HomeState extends State<Home> {
                   IconButton(
                       onPressed: () {
                         FocusScope.of(context).unfocus();
-                        setState(() => _showEmoji = !_showEmoji);
+                        setState(() => _showEmoji = !_showEmoji); // Afișează/ascunde picker-ul de emoji-uri
                       },
                       icon: const Icon(Icons.emoji_emotions,
                           color: Colors.blueAccent, size: 25)),
                   Expanded(
                       child: TextField(
-                          controller: _textController,
+                          controller: _textController, // Controller pentru textul mesajului
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
                           onTap: () {
@@ -256,14 +261,14 @@ class _HomeState extends State<Home> {
                   IconButton(
                       onPressed: () async {
                         Provider.of<ChatProvider>(context, listen: false)
-                            .selectAndStoreMultipleImages();
+                            .selectAndStoreMultipleImages(); // Selectează și stochează imagini multiple
                       },
                       icon: const Icon(Icons.image,
                           color: Colors.blueAccent, size: 26)),
                   IconButton(
                       onPressed: () {
                         Provider.of<ChatProvider>(context, listen: false)
-                            .selectAndStoreImage();
+                            .selectAndStoreImage(); // Selectează și stochează o imagine
                       },
                       icon: const Icon(Icons.camera_alt_rounded,
                           color: Colors.blueAccent, size: 26)),
@@ -276,8 +281,8 @@ class _HomeState extends State<Home> {
             onPressed: () {
               String message = '[TXT]${_textController.text.trim()}';
               Provider.of<ChatProvider>(context, listen: false)
-                  .sendMessage(message);
-              _textController.clear();
+                  .sendMessage(message); // Trimite mesajul
+              _textController.clear(); // Curăță textul
             },
             minWidth: 0,
             padding: EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
@@ -290,6 +295,7 @@ class _HomeState extends State<Home> {
     );
   }
 
+  // Dialog pentru modificarea mesajului
   void _showEditMessageDialog(String currentMessage, DateTime dateSend) {
     String newMessage = currentMessage.startsWith('[TXT]')
         ? currentMessage.substring(5)
@@ -319,7 +325,7 @@ class _HomeState extends State<Home> {
             TextButton(
               onPressed: () {
                 Provider.of<ChatProvider>(context, listen: false)
-                    .changeMessage(dateSend, '[TXT]$newMessage');
+                    .changeMessage(dateSend, '[TXT]$newMessage'); // Modifică mesajul
                 Navigator.of(context).pop();
               },
               child: Text('Submit'),

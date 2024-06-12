@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\OneDrive\\Desktop\\Opţional_Lab\\Proiect-MDS\\Backend\\Backend\\Backend.csproj": {}
+    "C:\\Users\\baciu\\Documents\\GitHub\\Proiect-MDS\\Backend\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "D:\\OneDrive\\Desktop\\Opţional_Lab\\Proiect-MDS\\Backend\\Backend\\Backend.csproj": {
+    "C:\\Users\\baciu\\Documents\\GitHub\\Proiect-MDS\\Backend\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\OneDrive\\Desktop\\Opţional_Lab\\Proiect-MDS\\Backend\\Backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\baciu\\Documents\\GitHub\\Proiect-MDS\\Backend\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "D:\\OneDrive\\Desktop\\Opţional_Lab\\Proiect-MDS\\Backend\\Backend\\Backend.csproj",
-        "packagesPath": "C:\\Users\\bogda\\.nuget\\packages\\",
-        "outputPath": "D:\\OneDrive\\Desktop\\Opţional_Lab\\Proiect-MDS\\Backend\\Backend\\obj\\",
+        "projectPath": "C:\\Users\\baciu\\Documents\\GitHub\\Proiect-MDS\\Backend\\Backend\\Backend.csproj",
+        "packagesPath": "C:\\Users\\baciu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\baciu\\Documents\\GitHub\\Proiect-MDS\\Backend\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\bogda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\baciu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -35,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -76,6 +70,10 @@
               "target": "Package",
               "version": "[8.0.2, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
@@ -100,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

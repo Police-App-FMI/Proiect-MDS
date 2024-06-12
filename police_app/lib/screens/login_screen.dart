@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:police_app/providers/user_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart'; // Importă pachetul Flutter pentru componente UI.
+import 'package:flutter/services.dart'; // Importă pachetul Flutter pentru servicii de sistem.
+import 'package:email_validator/email_validator.dart'; // Importă pachetul pentru validarea emailurilor.
+import 'package:police_app/providers/user_provider.dart'; // Importă pachetul personalizat pentru gestionarea utilizatorilor.
+import 'package:provider/provider.dart'; // Importă pachetul pentru gestionarea stării aplicației.
 
 class Login extends StatelessWidget {
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<User_provider>(context);
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController urlController = TextEditingController();
+    final userProvider = Provider.of<User_provider>(context); // Obține instanța de User_provider din context.
+    TextEditingController emailController = TextEditingController(); // Controller pentru câmpul de text al emailului.
+    TextEditingController passwordController = TextEditingController(); // Controller pentru câmpul de text al parolei.
     return Scaffold(
         body: Container(
             width: double.infinity,
@@ -18,7 +17,7 @@ class Login extends StatelessWidget {
               Colors.blue[900]!,
               Colors.blue[800]!,
               Colors.blue[400]!
-            ])),
+            ])), // Setează un gradient de fundal albastru pentru container.
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -32,10 +31,10 @@ class Login extends StatelessWidget {
                       children: <Widget>[
                         const Text("Login",
                             style:
-                                TextStyle(color: Colors.white, fontSize: 40)),
+                                TextStyle(color: Colors.white, fontSize: 40)), // Textul principal de login.
                         SizedBox(height: 10),
                         const Text("Welcome Back",
-                            style: TextStyle(color: Colors.white, fontSize: 18))
+                            style: TextStyle(color: Colors.white, fontSize: 18)) // Textul secundar de întâmpinare.
                       ],
                     )),
                 SizedBox(
@@ -47,7 +46,7 @@ class Login extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(60),
-                                topRight: Radius.circular(60))),
+                                topRight: Radius.circular(60))), // Setează colțurile rotunjite pentru container.
                         child: Padding(
                             padding: EdgeInsets.all(30),
                             child: Column(
@@ -64,7 +63,7 @@ class Login extends StatelessWidget {
                                             color: Color.fromRGBO(
                                                 29, 82, 216, 0.98),
                                             blurRadius: 20,
-                                            offset: Offset(0, 10))
+                                            offset: Offset(0, 10)) // Setează umbra pentru container.
                                       ]),
                                 ),
                                 Form(
@@ -75,25 +74,20 @@ class Login extends StatelessWidget {
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 bottom: BorderSide(
-                                                    color: Colors.grey[200]!))),
+                                                    color: Colors.grey[200]!))), // Linie de jos pentru separarea câmpurilor.
                                         child: TextFormField(
                                           controller: emailController,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
+                                          autovalidateMode: AutovalidateMode.onUserInteraction,
                                           autocorrect: false,
-                                          keyboardType:
-                                              TextInputType.emailAddress,
+                                          keyboardType: TextInputType.emailAddress, // Tipul de tastatură pentru email.
                                           decoration: InputDecoration(
                                               hintText: "Email",
-                                              hintStyle:
-                                                  TextStyle(color: Colors.grey),
-                                              border: InputBorder.none),
+                                              hintStyle: TextStyle(color: Colors.grey),
+                                              border: InputBorder.none), // Setează stilul pentru hint-ul câmpului.
                                           validator: (String? value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
+                                            if (value == null || value.isEmpty) {
                                               return 'Please enter your email';
-                                            } else if (!EmailValidator.validate(
-                                                value)) {
+                                            } else if (!EmailValidator.validate(value)) {
                                               return 'Please enter a valid email';
                                             }
                                             return null;
@@ -105,53 +99,22 @@ class Login extends StatelessWidget {
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 bottom: BorderSide(
-                                                    color: Colors.grey[200]!))),
+                                                    color: Colors.grey[200]!))), // Linie de jos pentru separarea câmpurilor.
                                         child: TextFormField(
                                           controller: passwordController,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
+                                          autovalidateMode: AutovalidateMode.onUserInteraction,
                                           autocorrect: false,
                                           decoration: InputDecoration(
                                             hintText: "Password",
-                                            hintStyle:
-                                                TextStyle(color: Colors.grey),
-                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(color: Colors.grey),
+                                            border: InputBorder.none, // Setează stilul pentru hint-ul câmpului.
                                           ),
-                                          obscureText: true,
+                                          obscureText: true, // Ascunde textul introdus în câmpul de parolă.
                                           validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
+                                            if (value == null || value.isEmpty) {
                                               return 'Please enter your password';
                                             } else if (value.length < 6) {
                                               return 'Password must be at least 6 characters long';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey[200]!))),
-                                        child: TextFormField(
-                                          controller: urlController,
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          autocorrect: false,
-                                          decoration: InputDecoration(
-                                            hintText: "URL",
-                                            hintStyle:
-                                                TextStyle(color: Colors.grey),
-                                            border: InputBorder.none,
-                                          ),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Please enter URL';
-                                            } else if (value.length < 3) {
-                                              return 'URL must be at least 3 characters long';
                                             }
                                             return null;
                                           },
@@ -163,8 +126,7 @@ class Login extends StatelessWidget {
                                           userProvider.verifyLogin(
                                               context,
                                               emailController.text,
-                                              passwordController.text,
-                                              urlController.text)
+                                              passwordController.text) // Apelează funcția de verificare a autentificării.
                                         },
                                         child: Container(
                                             height: 50,
@@ -173,13 +135,12 @@ class Login extends StatelessWidget {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(50),
-                                                color: Colors.blue[900]),
+                                                color: Colors.blue[900]), // Butonul de login cu colțuri rotunjite și fundal albastru.
                                             child: Center(
                                                 child: Text("Login",
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold)))),
+                                                        fontWeight: FontWeight.bold)))) // Textul butonului de login.
                                       ),
                                     ],
                                   ),

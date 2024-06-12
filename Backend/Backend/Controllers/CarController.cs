@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Backend.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Backend.Controllers
 {
@@ -11,69 +16,100 @@ namespace Backend.Controllers
     public class CarController : ControllerBase
     {
         // Luăm path-ul către interpretorul de python şi script-ul de executat
-        private readonly string pythonPath = Path.Combine((string)AppContext.GetData("DataDirectory"), "venv", "Scripts", "python.exe");
-        private readonly string script = Path.Combine((string)AppContext.GetData("DataDirectory"), "Machine Learning", "Car A.I", "test.py");
-        private readonly string upscale = Path.Combine((string)AppContext.GetData("DataDirectory"), "Machine Learning", "Upscalling A.I", "upscale.py");
+        private readonly HttpClient _httpClient;
+        private readonly BackendContext _backendcontext;
 
-        [HttpPost]
-        public async Task<IActionResult> Car_Plate_Recognition(IFormFile picture)
+        public CarController(IHttpClientFactory httpClientFactory, BackendContext backendcontext)
         {
-            var extension = Path.GetExtension(picture.FileName).ToLowerInvariant();
-            if (string.IsNullOrEmpty(extension) || ".jpg" != extension)
-            {
-                return BadRequest(new { message = "Fişierul primit este invalid sau corupt." });
-            }
-            var filePath = Path.Combine((string)AppContext.GetData("DataDirectory"), "Machine Learning", "Car A.I", "picture.jpg");
-            using (var stream = System.IO.File.Create(filePath))
-            {
-                await picture.CopyToAsync(stream);
-            }
-
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = pythonPath;
-            start.Arguments = string.Format("\"{0}\" \"{1}\"", script, "");
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            using (Process process = Process.Start(start))
-            {
-                using (StreamReader reader = process.StandardOutput)
-                {
-                    string result = reader.ReadToEnd();
-                    System.IO.File.Delete(filePath);
-                    return Ok(result);
-                }
-            }
+            _httpClient = httpClientFactory.CreateClient();
+            _backendcontext = backendcontext;
         }
 
-        [HttpPost("test")]
-        public async Task<IActionResult> Test(IFormFile picture)
+        [HttpPost]
+        public async Task<IActionResult> Car_Recognition(IFormFile image)
         {
-            var extension = Path.GetExtension(picture.FileName).ToLowerInvariant();
-            if (string.IsNullOrEmpty(extension) || ".jpg" != extension)
+            if (image == null)
+            {
+                return BadRequest(new { message = "No file uploaded" });
+            }
+
+            if (image.Length == 0)
+            {
+                return BadRequest(new { message = "No file uploaded" });
+            }
+
+            var extension = Path.GetExtension(image.FileName).ToLowerInvariant();
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+
+            if (string.IsNullOrEmpty(extension) || !allowedExtensions.Contains(extension))
             {
                 return BadRequest(new { message = "Fişierul primit este invalid sau corupt." });
             }
-            var filePath = Path.Combine((string)AppContext.GetData("DataDirectory"), "Machine Learning", "Upscalling A.I", "picture.jpg");
-            using (var stream = System.IO.File.Create(filePath))
-            {
-                await picture.CopyToAsync(stream);
-            }
 
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = pythonPath;
-            start.Arguments = string.Format("\"{0}\" \"{1}\"", upscale, "");
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            using (Process process = Process.Start(start))
+            string contentType;
+            switch (extension)
             {
-                using (StreamReader reader = process.StandardOutput)
+                case ".jpg":
+                    contentType = "image/jpg";
+                    break;
+                case ".jpeg":
+                    contentType = "image/jpeg";
+                    break;
+                case ".png":
+                    contentType = "image/png";
+                    break;
+                default:
+                    return BadRequest(new { message = "Unsupported file type." });
+            }
+            try
+            {
+                using (var stream = new MemoryStream())
                 {
-                    string result = reader.ReadToEnd();
-                    System.IO.File.Delete(filePath);
-                    if (result != "False")
-                        return Ok(result);
-                    else return BadRequest(new { message = "Ceva a mers prost!" });
+                    await image.CopyToAsync(stream);
+
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    var content = new ByteArrayContent(stream.ToArray());
+                    content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+
+                    var response = await _httpClient.PostAsync("https://app-policesoft.azurewebsites.net/api/classifyplate", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var predictionResponse = await response.Content.ReadAsStringAsync();
+                        var predictionJson = JsonConvert.DeserializeObject<dynamic>(predictionResponse);
+
+                        using (JsonDocument doc = JsonDocument.Parse(predictionResponse))
+                            {
+                                var root = doc.RootElement;
+                                var prediction = root.GetProperty("license_plate_text").GetString();
+
+                                var masina = await _backendcontext.Masina.Include(m => m.Propietar).FirstOrDefaultAsync(i => i.Nr_Inmatriculare == prediction);
+
+                                masina.Propietar.Masinile = null;
+                                
+                                if (masina == null)
+                                {
+                                    return NotFound("Masina " + prediction + " nu exista in baza de date");
+                                }
+                                else
+                                {
+                                    return Ok(masina);
+                                }
+                            }
+                        }
+                    else
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        Debug.WriteLine($"Error response from Python API: {errorContent}");
+                        return StatusCode((int)response.StatusCode, $"Imaginea nu a ajuns la API: {errorContent}");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }
