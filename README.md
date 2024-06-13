@@ -274,12 +274,10 @@ We have implemented 6 screens for the frontend of our app:
 - [**Home screen**](#home-screen): It's the home screen of our app, rom which you can access all functionalities.
 - [**URL Error**](#url-error): Shows up in case of an error.
 - [**Face recognition**](#face-recognition): It's the screen used for the face recognition functionality.
-- [**Car plate recognition**](#car-plate-recognition): It's the screen used for the car plate recognition functionality.
+- [**Plate recognition**](#plate-recognition): It's the screen used for the car plate recognition functionality.
 - [**Missing person**](#missing-person): It's the screen used for the missing person functionality.
 - [**Call reinforcements**](#call-reinforcements): It's the screen used for the call reinforcements functionality, that sends the location of the officer that has an emergency and a notification to other on-duty officers.
 - [**On Duty**](#on-duty): It's the screen used for the on duty functionality, which has a list of on duty officers and a map with the location of the on duty officers.
-
-
 
 
 ### Login Screen[^](*link*)
