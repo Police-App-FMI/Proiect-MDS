@@ -264,6 +264,188 @@ Run the script with the image path as an argument. Update the image path in the 
 
 Run the script in the same directory as your image files or update the image_path to the correct path of your image.
 
-## The Mobile Police App
+## The mobile app
 
+Welcome to the front-end of our project! Here, we'll talk about the design of the front-end app.
+
+We have implemented 6 screens for the frontend of our app:
+
+- [**Login screen**](#login-screen): It's the login screen that has the email/username and password TextForms.
+- [**Home screen**](#home-screen): It's the home screen of our app, rom which you can access all functionalities.
+- [**URL Error**](#url-error): Shows up in case of an error.
+- [**Face recognition**](#face-recognition): It's the screen used for the face recognition functionality.
+- [**Car plate recognition**](#car-plate-recognition): It's the screen used for the car plate recognition functionality.
+- [**Missing person**](#missing-person): It's the screen used for the missing person functionality.
+- [**Call reinforcements**](#call-reinforcements): It's the screen used for the call reinforcements functionality, that sends the location of the officer that has an emergency and a notification to other on-duty officers.
+- [**On Duty**](#on-duty): It's the screen used for the on duty functionality, which has a list of on duty officers and a map with the location of the on duty officers.
+
+
+
+
+### Login Screen[^](*link*)
+
+This screen implements a login screen featuring a modern UI with email and password validation.
+
+
+## Features
+
+- Email and password input fields with validation
+
+- Gradient background
+
+- Rounded corners for UI elements
+
+- Login button that triggers authentication logic
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Provider](https://pub.dev/packages/provider) - State management
+- [Email Validator](https://pub.dev/packages/email_validator) - Email validation
+
+
+## Explanation of Key Elements
+	- Gradient Background: Provides a visually appealing gradient background.
+	- Rounded Corners: Adds rounded corners to containers for a modern look.
+	- Email and Password Validation: Uses the email_validator package to validate email 	  addresses and ensures passwords are at least 6 characters long.
+	- Login Button: Triggers the verifyLogin function from User_provider to handle 	  authentication logic.
+
+
+
+### Home Screen[^](*link*)
+
+This screen implements the home screen for the Police App featuring a chat interface with emoji support, image handling, and message editing capabilities.
+
+## Features
+
+- Real-time message updates with a chat stream
+- Text input with emoji picker
+- Image message handling
+- Message editing and deletion
+- Responsive UI with a gradient background and rounded corners
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Provider](https://pub.dev/packages/provider) - State management
+- [Emoji Picker Flutter](https://pub.dev/packages/emoji_picker_flutter) - Emoji picker
+- [Intl](https://pub.dev/packages/intl) - Internationalization and localization
+
+## Explanation of Key Elements
+	- Real-time Message Updates: Listens for new messages and updates the chat interface 	  	  in real-time.
+	- Emoji Picker: Allows users to select and insert emojis into their messages.
+	- Image Handling: Supports sending and displaying image messages, with base64 	  	  encoding/decoding.
+	- Message Editing and Deletion: Provides options to edit or delete messages through   	 	  dialog interactions.
+	- Responsive UI: Features a gradient background, rounded corners, and responsive 	  	  design elements to ensure a modern look.
+
+### URL Error Screen
+
+This screen notifies the user about server unavailability and provides a button to attempt reconnection.
+
+## Features
+
+- Informative message about server unavailability
+- Reconnection button to retry server connection
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Provider](https://pub.dev/packages/provider) - State management
+
+## Explanation of Key Elements
+
+- **Informative Message**: Displays a message informing the user that the server is down.
+- **Reconnection Button**: Allows the user to attempt reconnecting to the server.
+- **Snackbar Feedback**: Provides feedback to the user with a Snackbar indicating loading and connection status.
+
+
+### Plate Recognition Screen
+
+This screen allows users to recognize car plates from images using an API integration.
+
+## Features
+
+- Select image from gallery or capture with camera
+- Display image and details of recognized vehicle
+- Error message display for server connection issues
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Image Picker](https://pub.dev/packages/image_picker) - Plugin for selecting images
+- [File Picker](https://pub.dev/packages/file_picker) - Plugin for selecting files
+- [HTTP](https://pub.dev/packages/http) - HTTP client for making requests
+- [HTTP Parser](https://pub.dev/packages/http_parser) - Utility for parsing HTTP media types
+
+## Explanation of Key Elements
+	- Image Selection: Users can choose an image from the gallery or capture one using the 	  camera.
+ 	- Image Display: Displays the selected image with the option to recognize the car 	  plate.
+	- API Integration: Utilizes an API to send the selected image for plate recognition.
+	- Error Handling: Displays error messages if there are issues connecting to the server 	  or recognizing the plate.
+
+
+### Face Recognition Screen[^](*link*)
+
+This screen enables facial recognition using images captured from the camera or gallery.
+
+## Features
+
+- Select image from gallery or capture with camera
+- Display image and details of recognized individual
+- Error message display for server connection issues
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Image Picker](https://pub.dev/packages/image_picker) - Plugin for selecting images
+- [File Picker](https://pub.dev/packages/file_picker) - Plugin for selecting files
+- [HTTP](https://pub.dev/packages/http) - HTTP client for making requests
+- [HTTP Parser](https://pub.dev/packages/http_parser) - Utility for parsing HTTP media types
+
+## Explanation of Key Elements
+	- Image Selection: Users can choose an image from the gallery or capture one using 	  the camera.
+	- Image Display: Displays the selected image with the option to recognize the 	  	  	  individual.
+	- API Integration: Utilizes an API to send the selected image for facial recognition.
+	- Error Handling: Displays error messages if there are issues connecting to the 	  	  server or recognizing the individual.
+
+
+### Call Reinforcements Screen[^](*link*)
+
+This screen allows users to call reinforcements and display SOS calls.
+
+## Features
+
+- Call button triggers API request to call reinforcements
+- Display list of SOS calls with details
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [HTTP](https://pub.dev/packages/http) - HTTP client for making requests
+- [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter) - Plugin for integrating Google Maps
+- [URL Launcher](https://pub.dev/packages/url_launcher) - Plugin for launching URLs
+
+## Explanation of Key Elements
+	- Call Button: Initiates a request to call reinforcements using the specified API 	  	  endpoint.
+	- SOS Calls List: Displays a list of SOS calls retrieved from the backend.
+	- API Integration: Communicates with the backend to send SOS calls and fetch updated 	  call lists.
+
+### Missing Person Screen[^](*link*)
+
+This screen displays the location of a missing person using Google Maps.
+
+## Features
+
+- Displays a Google Map showing the missing person's last known location
+- Shows a circular search area around the location
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter) - Plugin for   integrating Google Maps
+
+## Explanation of Key Elements
+
+	- Google Map: Displays the map with a marker at the missing person's location.
+	- Search Area Circle: Represents a circular area around the missing person's location 	  for search purposes.
 
