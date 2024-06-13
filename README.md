@@ -192,5 +192,79 @@ If neither the image nor the video file is opened successfully, the script print
 Run the script in the same directory as your image and video files. Make sure to update the paths to the image, video, and model files in the script.
 
 
+### License Plate Detection[^](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Machine%20Learning/Car%20A.I/__init__.py)
+
+This script uses OpenCV and EasyOCR to detect and read text from license plates in images.
+
+#### How it works
+
+1. The script loads an image from the specified path.
+
+2. It converts the image to grayscale.
+
+3. It reduces noise and detects edges in the image:
+	- Applies a bilateral filter for noise reduction.
+	- Uses the Canny edge detection algorithm to find edges.
+	- The script finds contours in the edge-detected image:
+	- Retrieves and sorts contours by area.
+	- Looks for contours that approximate a quadrilateral, indicating a 	  potential license plate.
+	- If a potential license plate contour is found:
+	- Creates a mask for the detected contour.
+	- Extracts the region of interest (ROI) from the original image.
+	- The script uses EasyOCR to read text from the extracted ROI.
+	- If text is recognized, it is returned. If no text is recognized or no 	  license plate is detected, None is returned.
+
+
+#### Requirements
+	- OpenCV
+	- NumPy
+	- Matplotlib
+	- Imutils
+	- EasyOCR
+	- Usage
+
+#### Usage
+
+Run the script with the image path as an argument. Update the image path in the script accordingly.
+
+Run the script in the same directory as your image files or update the image_path to the correct path of your image.
+
+
+### Face Detection[^](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Machine%20Learning/Car%20A.I/__init__.py)
+
+This script uses OpenCV and TFLite to detect faces, upscale images, and recognize known individuals from an input image. The script is designed to run as an Azure Function.
+
+#### How it works
+
+1. Initialization:
+    - The script initializes the TFLite model and allocates tensors.
+    - It loads the Haar Cascade for face detection.
+    - It initializes a list of class names for recognized individuals.
+    - A DnnSuperResImpl object is created for image upscaling.
+
+2. Image Processing Functions:
+    - predict_frame: Resizes the frame, prepares it for the TFLite model, and returns the predicted class name.
+    - upscale_image: Uses the FSRCNN model to upscale the image.
+    - crop_face: Converts the image to grayscale, detects faces, and crops the face region.
+
+3. Prediction Function:
+	- predict_image: Crops the face from the image and predicts the class label using the TFLite model.
+
+4. Main Function:
+    - main: Handles the HTTP request, reads and decodes the image, processes the image for face detection and recognition, and returns the prediction result.
+#### Requirements
+	- OpenCV
+	- NumPy
+	- TFLite Runtime
+	- Azure Functions
+	- Logging
+	- Usage
+
+#### Usage
+
+Run the script with the image path as an argument. Update the image path in the script accordingly.
+
+Run the script in the same directory as your image files or update the image_path to the correct path of your image.
+
 ## The Mobile Police App
 
