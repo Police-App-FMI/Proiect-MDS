@@ -194,38 +194,36 @@ Run the script in the same directory as your image and video files. Make sure to
 
 ### License Plate Detection[^](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Machine%20Learning/Car%20A.I/__init__.py)
 
-This script uses OpenCV and EasyOCR to detect and read text from license plates in images.
+This script is designed to recognize vehicle license plate numbers from images using OpenCV and the Google Cloud Vision API. The script is intended to be deployed as an Azure Function.
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/doc/ReadMePhotos/sample1.png)
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/doc/ReadMePhotos/sample2.png)
 
 #### How it works
 
-1. The script loads an image from the specified path.
+1. The main function is triggered by an HTTP request.
 
-2. It converts the image to grayscale.
+2. The script extracts the image file from the request body.
 
-3. It reduces noise and detects edges in the image:
-	- Applies a bilateral filter for noise reduction.
-	- Uses the Canny edge detection algorithm to find edges.
-	- The script finds contours in the edge-detected image:
-	- Retrieves and sorts contours by area.
-	- Looks for contours that approximate a quadrilateral, indicating a 	  potential license plate.
-	- If a potential license plate contour is found:
-	- Creates a mask for the detected contour.
-	- Extracts the region of interest (ROI) from the original image.
-	- The script uses EasyOCR to read text from the extracted ROI.
-	- If text is recognized, it is returned. If no text is recognized or no 	  license plate is detected, None is returned.
+3. The Google Cloud Vision API client is initialized using credentials specified in the environment.
 
+4. The image is read directly from the request body.
 
+5. If the image is successfully decoded:
+	- The 'detect_license_plate function' is called to identify and extract the license plate text.
+	- The extracted text is returned in a JSON response.
+
+6. If the image cannot be decoded, an error message is returned.
+   
 #### Requirements
 	- OpenCV
-	- NumPy
-	- Matplotlib
-	- Imutils
-	- EasyOCR
-	- Usage
+	- Google Cloud Vision API
+	- Azure Functions
 
 #### Usage
 
-Run the script with the image path as an argument. Update the image path in the script accordingly.
+Deploy the script as an Azure Function. Ensure that the image and model files are accessible. The paths to the Google Cloud Vision credentials and the Haar cascade model need to be correctly set in the environment and script, respectively.
 
 Run the script in the same directory as your image files or update the image_path to the correct path of your image.
 
