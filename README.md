@@ -196,9 +196,9 @@ Run the script in the same directory as your image and video files. Make sure to
 
 This script is designed to recognize vehicle license plate numbers from images using OpenCV and the Google Cloud Vision API. The script is intended to be deployed as an Azure Function.
 
-![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/doc/ReadMePhotos/sample1.png)
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/sample1.png)
 
-![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/doc/ReadMePhotos/sample2.png)
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/sample2.png)
 
 #### How it works
 
@@ -265,4 +265,5 @@ Run the script with the image path as an argument. Update the image path in the 
 Run the script in the same directory as your image files or update the image_path to the correct path of your image.
 
 ## The Mobile Police App
+
 
