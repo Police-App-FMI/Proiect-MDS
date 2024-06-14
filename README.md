@@ -303,10 +303,10 @@ This screen implements a login screen featuring a modern UI with email and passw
 
 
 ## Explanation of Key Elements
-	- Gradient Background: Provides a visually appealing gradient background.
-	- Rounded Corners: Adds rounded corners to containers for a modern look.
-	- Email and Password Validation: Uses the email_validator package to validate email 	  addresses and ensures passwords are at least 6 characters long.
-	- Login Button: Triggers the verifyLogin function from User_provider to handle 	  authentication logic.
+- **Gradient Background**: Provides a visually appealing gradient background.
+- **Rounded Corners**: Adds rounded corners to containers for a modern look.
+- **Email and Password Validation**: Uses the email_validator package to validate email addresses and ensures passwords are at least 6 characters long.
+- **Login Button**: Triggers the verifyLogin function from User_provider to handle authentication logic.
 
 
 
@@ -330,11 +330,11 @@ This screen implements the home screen for the Police App featuring a chat inter
 - [Intl](https://pub.dev/packages/intl) - Internationalization and localization
 
 ## Explanation of Key Elements
-	- Real-time Message Updates: Listens for new messages and updates the chat interface 	  	  in real-time.
-	- Emoji Picker: Allows users to select and insert emojis into their messages.
-	- Image Handling: Supports sending and displaying image messages, with base64 	  	  encoding/decoding.
-	- Message Editing and Deletion: Provides options to edit or delete messages through   	 	  dialog interactions.
-	- Responsive UI: Features a gradient background, rounded corners, and responsive 	  	  design elements to ensure a modern look.
+- **Real-time Message Updates**: Listens for new messages and updates the chat interface in real-time.
+- **Emoji Picker**: Allows users to select and insert emojis into their messages.
+- **Image Handling**: Supports sending and displaying image messages, with base64 encoding/decoding.
+- **Message Editing and Deletion**: Provides options to edit or delete messages through dialog interactions.
+- **Responsive UI**: Features a gradient background, rounded corners, and responsive design elements to ensure a modern look.
 
 ### URL Error Screen
 
@@ -376,10 +376,10 @@ This screen allows users to recognize car plates from images using an API integr
 - [HTTP Parser](https://pub.dev/packages/http_parser) - Utility for parsing HTTP media types
 
 ## Explanation of Key Elements
-	- Image Selection: Users can choose an image from the gallery or capture one using the 	  camera.
- 	- Image Display: Displays the selected image with the option to recognize the car 	  plate.
-	- API Integration: Utilizes an API to send the selected image for plate recognition.
-	- Error Handling: Displays error messages if there are issues connecting to the server 	  or recognizing the plate.
+- **Image Selection**: Users can choose an image from the gallery or capture one using the camera.
+- **Image Display**: Displays the selected image with the option to recognize the car plate.
+- **API Integration**: Utilizes an API to send the selected image for plate recognition.
+- **Error Handling**: Displays error messages if there are issues connecting to the server or recognizing the plate.
 
 
 ### Face Recognition Screen[^](*link*)
@@ -401,10 +401,10 @@ This screen enables facial recognition using images captured from the camera or 
 - [HTTP Parser](https://pub.dev/packages/http_parser) - Utility for parsing HTTP media types
 
 ## Explanation of Key Elements
-	- Image Selection: Users can choose an image from the gallery or capture one using 	  the camera.
-	- Image Display: Displays the selected image with the option to recognize the 	  	  	  individual.
-	- API Integration: Utilizes an API to send the selected image for facial recognition.
-	- Error Handling: Displays error messages if there are issues connecting to the 	  	  server or recognizing the individual.
+- **Image Selection**: Users can choose an image from the gallery or capture one using the camera.
+- **Image Display**: Displays the selected image with the option to recognize the individual.
+- **API Integration**: Utilizes an API to send the selected image for facial recognition.
+- **Error Handling**: Displays error messages if there are issues connecting to the  server or recognizing the individual.
 
 
 ### Call Reinforcements Screen[^](*link*)
@@ -424,9 +424,9 @@ This screen allows users to call reinforcements and display SOS calls.
 - [URL Launcher](https://pub.dev/packages/url_launcher) - Plugin for launching URLs
 
 ## Explanation of Key Elements
-	- Call Button: Initiates a request to call reinforcements using the specified API 	  	  endpoint.
-	- SOS Calls List: Displays a list of SOS calls retrieved from the backend.
-	- API Integration: Communicates with the backend to send SOS calls and fetch updated 	  call lists.
+- **Call Button**: Initiates a request to call reinforcements using the specified API endpoint.
+- **SOS Calls List**: Displays a list of SOS calls retrieved from the backend.
+- **API Integration**: Communicates with the backend to send SOS calls and fetch updated call lists.
 
 ### Missing Person Screen[^](*link*)
 
@@ -443,7 +443,6 @@ This screen displays the location of a missing person using Google Maps.
 - [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter) - Plugin for   integrating Google Maps
 
 ## Explanation of Key Elements
-
-	- Google Map: Displays the map with a marker at the missing person's location.
-	- Search Area Circle: Represents a circular area around the missing person's location 	  for search purposes.
+- **Google Map**: Displays the map with a marker at the missing person's location.
+- **Search Area Circle**: Represents a circular area around the missing person's location for search purposes.
 
