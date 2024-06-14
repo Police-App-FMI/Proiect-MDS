@@ -13,6 +13,10 @@ PoliceSoft is a mobile application designed to enhance the efficiency and effect
 ## Use Case Diagram
 ![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/assets/76045639/22d145be-147a-4c3a-a739-7b494ff663c4)
 
+## Workflow Diagram
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/workflow.png)
+
+
 ## User Stories
 - A police officer uses the application to identify if a person has had prior incidents, through facial recognition.
 - A police officer uses the application to identify if a car has all its documents in order, through license plate recognition.
