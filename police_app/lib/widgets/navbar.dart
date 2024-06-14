@@ -44,7 +44,9 @@ class NavBar extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.local_police_outlined),
           title: Text('Cops On-Duty'),
-          onTap: () => print('Cops On-Doty'),
+          onTap: () => {
+            navigatorKey.currentState?.pushReplacementNamed('onDuty')
+          }
         ),
         ListTile(
           leading: Icon(Icons.face),
@@ -63,7 +65,16 @@ class NavBar extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.people_alt_outlined),
           title: Text('Call Reinforcements'),
-          onTap: () => print('Call Reinforcements'),
+          onTap: () => {
+            navigatorKey.currentState?.pushReplacementNamed('callReinforcements')
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.person_search_outlined),
+          title: Text('Missing Person'),
+          onTap: () => {
+            navigatorKey.currentState?.pushReplacementNamed('missingPersons')
+          },
         ),
         Divider(),
         ListTile(
