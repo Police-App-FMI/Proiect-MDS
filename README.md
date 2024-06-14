@@ -1,5 +1,30 @@
-# Proiect-MDS
-![Not Found!](https://github.com/Rares5000/Proiect-MDS/assets/76045639/01abeb99-98f4-49fc-bf59-b4b3b0f6f890)
+# Police Software
+
+PoliceSoft is a mobile application designed to enhance the efficiency and effectiveness of law enforcement officers in traffic operations. The app features communication, face and car plate recognition, on-duty management, and tools for handling missing persons.
+
+## Key Features
+
+- **General Chat**: Communication among officers.
+- **Face Recognition**: Extract personal information from government databases.
+- **Car Plate Recognition**: Retrieve vehicle details.
+- **On Duty Management**: Track on-duty officers and call for reinforcements.
+- **Missing Persons**: Report and view missing persons on a map.
+
+## Use Case Diagram
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/assets/76045639/22d145be-147a-4c3a-a739-7b494ff663c4)
+
+## User Stories
+- A police officer uses the application to identify if a person has had prior incidents, through facial recognition.
+- A police officer uses the application to identify if a car has all its documents in order, through license plate recognition.
+- In emergency situations, the application provides information on which officers are available, displaying a map to see who is closest.
+- A police officer is in danger and calls the nearest on-duty officers through the application.
+- Officers can use the application if a criminal has committed a crime and was recorded by a surveillance camera to check their identity.
+- Officers can use the application if a car appears suspicious to verify if the driver matches the owner.
+- Officers can use the application if a car appears suspicious to check if the car matches the license plate.
+- In the case of a serious road accident, the officer can call other units for assistance.
+- In the case of a car chase, the officer can check who the car belongs to and see information related to the driver.
+- The officer can use the application to see possible vehicles of a fugitive, preventing their escape.
+
 ## The Backend API
 
 Welcome to our project! Firstly, we will talk a bit about the backend API for our mobile application. The API is designed to interact with a database that includes the following tables:
@@ -167,5 +192,257 @@ If neither the image nor the video file is opened successfully, the script print
 Run the script in the same directory as your image and video files. Make sure to update the paths to the image, video, and model files in the script.
 
 
-## The Mobile Police App
+### License Plate Detection[^](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Machine%20Learning/Car%20A.I/__init__.py)
+
+This script is designed to recognize vehicle license plate numbers from images using OpenCV and the Google Cloud Vision API. The script is intended to be deployed as an Azure Function.
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/sample1.png)
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/sample2.png)
+
+#### How it works
+
+1. The main function is triggered by an HTTP request.
+
+2. The script extracts the image file from the request body.
+
+3. The Google Cloud Vision API client is initialized using credentials specified in the environment.
+
+4. The image is read directly from the request body.
+
+5. If the image is successfully decoded:
+	- The 'detect_license_plate function' is called to identify and extract the license plate text.
+	- The extracted text is returned in a JSON response.
+
+6. If the image cannot be decoded, an error message is returned.
+   
+#### Requirements
+	- OpenCV
+	- Google Cloud Vision API
+	- Azure Functions
+
+#### Usage
+
+Deploy the script as an Azure Function. Ensure that the image and model files are accessible. The paths to the Google Cloud Vision credentials and the Haar cascade model need to be correctly set in the environment and script, respectively.
+
+Run the script in the same directory as your image files or update the image_path to the correct path of your image.
+
+
+### Face Detection[^](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/Backend/Backend/Machine%20Learning/Car%20A.I/__init__.py)
+
+This script uses OpenCV and TFLite to detect faces, upscale images, and recognize known individuals from an input image. The script is designed to run as an Azure Function.
+
+#### How it works
+
+1. Initialization:
+    - The script initializes the TFLite model and allocates tensors.
+    - It loads the Haar Cascade for face detection.
+    - It initializes a list of class names for recognized individuals.
+    - A DnnSuperResImpl object is created for image upscaling.
+
+2. Image Processing Functions:
+    - predict_frame: Resizes the frame, prepares it for the TFLite model, and returns the predicted class name.
+    - upscale_image: Uses the FSRCNN model to upscale the image.
+    - crop_face: Converts the image to grayscale, detects faces, and crops the face region.
+
+3. Prediction Function:
+	- predict_image: Crops the face from the image and predicts the class label using the TFLite model.
+
+4. Main Function:
+    - main: Handles the HTTP request, reads and decodes the image, processes the image for face detection and recognition, and returns the prediction result.
+#### Requirements
+	- OpenCV
+	- NumPy
+	- TFLite Runtime
+	- Azure Functions
+	- Logging
+	- Usage
+
+#### Usage
+
+Run the script with the image path as an argument. Update the image path in the script accordingly.
+
+Run the script in the same directory as your image files or update the image_path to the correct path of your image.
+
+## The mobile app
+
+Welcome to the front-end of our project! Here, we'll talk about the design of the front-end app.
+
+We have implemented 6 screens for the frontend of our app:
+
+- [**Login screen**](#login-screen): It's the login screen that has the email/username and password TextForms.
+- [**Home screen**](#home-screen): It's the home screen of our app, rom which you can access all functionalities.
+- [**URL Error**](#url-error): Shows up in case of an error.
+- [**Face recognition**](#face-recognition): It's the screen used for the face recognition functionality.
+- [**Plate recognition**](#plate-recognition): It's the screen used for the car plate recognition functionality.
+- [**Missing person**](#missing-person): It's the screen used for the missing person functionality.
+- [**Call reinforcements**](#call-reinforcements): It's the screen used for the call reinforcements functionality, that sends the location of the officer that has an emergency and a notification to other on-duty officers.
+- [**On Duty**](#on-duty): It's the screen used for the on duty functionality, which has a list of on duty officers and a map with the location of the on duty officers.
+
+
+### Login Screen[^](*link*)
+
+This screen implements a login screen featuring a modern UI with email and password validation.
+
+
+## Features
+
+- Email and password input fields with validation
+
+- Gradient background
+
+- Rounded corners for UI elements
+
+- Login button that triggers authentication logic
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Provider](https://pub.dev/packages/provider) - State management
+- [Email Validator](https://pub.dev/packages/email_validator) - Email validation
+
+
+## Explanation of Key Elements
+- **Gradient Background**: Provides a visually appealing gradient background.
+- **Rounded Corners**: Adds rounded corners to containers for a modern look.
+- **Email and Password Validation**: Uses the email_validator package to validate email addresses and ensures passwords are at least 6 characters long.
+- **Login Button**: Triggers the verifyLogin function from User_provider to handle authentication logic.
+
+
+
+### Home Screen[^](*link*)
+
+This screen implements the home screen for the Police App featuring a chat interface with emoji support, image handling, and message editing capabilities.
+
+## Features
+
+- Real-time message updates with a chat stream
+- Text input with emoji picker
+- Image message handling
+- Message editing and deletion
+- Responsive UI with a gradient background and rounded corners
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Provider](https://pub.dev/packages/provider) - State management
+- [Emoji Picker Flutter](https://pub.dev/packages/emoji_picker_flutter) - Emoji picker
+- [Intl](https://pub.dev/packages/intl) - Internationalization and localization
+
+## Explanation of Key Elements
+- **Real-time Message Updates**: Listens for new messages and updates the chat interface in real-time.
+- **Emoji Picker**: Allows users to select and insert emojis into their messages.
+- **Image Handling**: Supports sending and displaying image messages, with base64 encoding/decoding.
+- **Message Editing and Deletion**: Provides options to edit or delete messages through dialog interactions.
+- **Responsive UI**: Features a gradient background, rounded corners, and responsive design elements to ensure a modern look.
+
+### URL Error Screen
+
+This screen notifies the user about server unavailability and provides a button to attempt reconnection.
+
+## Features
+
+- Informative message about server unavailability
+- Reconnection button to retry server connection
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Provider](https://pub.dev/packages/provider) - State management
+
+## Explanation of Key Elements
+
+- **Informative Message**: Displays a message informing the user that the server is down.
+- **Reconnection Button**: Allows the user to attempt reconnecting to the server.
+- **Snackbar Feedback**: Provides feedback to the user with a Snackbar indicating loading and connection status.
+
+
+### Plate Recognition Screen
+
+This screen allows users to recognize car plates from images using an API integration.
+
+## Features
+
+- Select image from gallery or capture with camera
+- Display image and details of recognized vehicle
+- Error message display for server connection issues
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Image Picker](https://pub.dev/packages/image_picker) - Plugin for selecting images
+- [File Picker](https://pub.dev/packages/file_picker) - Plugin for selecting files
+- [HTTP](https://pub.dev/packages/http) - HTTP client for making requests
+- [HTTP Parser](https://pub.dev/packages/http_parser) - Utility for parsing HTTP media types
+
+## Explanation of Key Elements
+- **Image Selection**: Users can choose an image from the gallery or capture one using the camera.
+- **Image Display**: Displays the selected image with the option to recognize the car plate.
+- **API Integration**: Utilizes an API to send the selected image for plate recognition.
+- **Error Handling**: Displays error messages if there are issues connecting to the server or recognizing the plate.
+
+
+### Face Recognition Screen[^](*link*)
+
+This screen enables facial recognition using images captured from the camera or gallery.
+
+## Features
+
+- Select image from gallery or capture with camera
+- Display image and details of recognized individual
+- Error message display for server connection issues
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Image Picker](https://pub.dev/packages/image_picker) - Plugin for selecting images
+- [File Picker](https://pub.dev/packages/file_picker) - Plugin for selecting files
+- [HTTP](https://pub.dev/packages/http) - HTTP client for making requests
+- [HTTP Parser](https://pub.dev/packages/http_parser) - Utility for parsing HTTP media types
+
+## Explanation of Key Elements
+- **Image Selection**: Users can choose an image from the gallery or capture one using the camera.
+- **Image Display**: Displays the selected image with the option to recognize the individual.
+- **API Integration**: Utilizes an API to send the selected image for facial recognition.
+- **Error Handling**: Displays error messages if there are issues connecting to the  server or recognizing the individual.
+
+
+### Call Reinforcements Screen[^](*link*)
+
+This screen allows users to call reinforcements and display SOS calls.
+
+## Features
+
+- Call button triggers API request to call reinforcements
+- Display list of SOS calls with details
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [HTTP](https://pub.dev/packages/http) - HTTP client for making requests
+- [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter) - Plugin for integrating Google Maps
+- [URL Launcher](https://pub.dev/packages/url_launcher) - Plugin for launching URLs
+
+## Explanation of Key Elements
+- **Call Button**: Initiates a request to call reinforcements using the specified API endpoint.
+- **SOS Calls List**: Displays a list of SOS calls retrieved from the backend.
+- **API Integration**: Communicates with the backend to send SOS calls and fetch updated call lists.
+
+### Missing Person Screen[^](*link*)
+
+This screen displays the location of a missing person using Google Maps.
+
+## Features
+
+- Displays a Google Map showing the missing person's last known location
+- Shows a circular search area around the location
+
+## Dependencies
+
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter) - Plugin for   integrating Google Maps
+
+## Explanation of Key Elements
+- **Google Map**: Displays the map with a marker at the missing person's location.
+- **Search Area Circle**: Represents a circular area around the missing person's location for search purposes.
 
