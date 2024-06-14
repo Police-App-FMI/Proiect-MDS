@@ -34,7 +34,6 @@ namespace Backend.Controllers
                         Profile_Pic = x.profile_pic,
                         Location = x.location
                     })
-                    .Where(x => x.Location != null)
                     .ToListAsync();
 
             return Ok(map);
@@ -58,7 +57,7 @@ namespace Backend.Controllers
             else return BadRequest(new { message = "User-ul dat nu a fost găsit!" });
         }
 
-        [HttpGet("Call Reinforcements")]
+        [HttpGet("CallReinforcements")]
         public async Task<IActionResult> SendReinforcements()
         {
             var emergencies = await _backendcontext.Reinforcements
@@ -75,7 +74,7 @@ namespace Backend.Controllers
             return Ok(emergencies);
         }
 
-        [HttpPost("Call Reinforcements")]
+        [HttpPost("CallReinforcements")]
         public async Task<IActionResult> CallReinforcements([FromBody] ReinforcementModel emergency)
         {
             // Obținem ID-ul utilizatorului autentificat din claim-urile token-ului JWT
@@ -102,7 +101,7 @@ namespace Backend.Controllers
             else return BadRequest(new { message = "Urgența nu a putut fi creată!" });
         }
 
-        [HttpDelete("Call Reinforcements")]
+        [HttpDelete("CallReinforcements")]
         public async Task<IActionResult> EndReinforcements([FromBody] ChatModel Id)
         {
             // Obținem ID-ul utilizatorului autentificat din claim-urile token-ului JWT
@@ -124,7 +123,7 @@ namespace Backend.Controllers
             else return NotFound(new { message = "Urgența nu a fost găsită." });
         }
 
-        [HttpGet("Missing Person")]
+        [HttpGet("MissingPerson")]
         public async Task<IActionResult> GetPerson()
         {
             var persons = await _backendcontext.MissingPersons
@@ -143,7 +142,7 @@ namespace Backend.Controllers
             return Ok(persons);
         }
 
-        [HttpPost("Missing Person")]
+        [HttpPost("MissingPerson")]
         [AllowAnonymous]
         public async Task<IActionResult> AddPerson([FromBody] MissingPersonModel person)
         {
@@ -164,7 +163,7 @@ namespace Backend.Controllers
             return Ok();
         }
 
-        [HttpPut("Missing Person")]
+        [HttpPut("MissingPerson")]
         public async Task<IActionResult> UpdatePerson([FromBody] AuthenticationModel newLocation)
         {
             var person = await _backendcontext.MissingPersons
@@ -182,7 +181,7 @@ namespace Backend.Controllers
             else return NotFound(new { messege = "Persoana selectată nu există în baza de date!" });
         }
 
-        [HttpDelete("Missing Person")]
+        [HttpDelete("MissingPerson")]
         public async Task<IActionResult> FoundPerson([FromBody] ChatModel Id)
         {
             var person = await _backendcontext.MissingPersons
