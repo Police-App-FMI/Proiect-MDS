@@ -502,4 +502,11 @@ The `/login` endpoint is a POST endpoint that allows users to authenticate in th
 
 ![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/chatgpt_screenshot.png)
 
+## Refactoring
+
+#### Refactoring refers to modifying a small part of code in order to improve it, while still retaining the original functionality. Using this principal of incremental changes, we managed to refactor our car plate recognition code. Below is a before and after of the work we did. The first iteration used EasyOCR and actually added the result over the original picture. However, the package took a lot of memory(5 GB) so we change to Google Vision API and this way we were able to use the car plate recognition using Azure in order to host our backend.
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/before.png)
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/after.png)
 
