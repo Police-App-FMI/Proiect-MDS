@@ -514,3 +514,26 @@ The `/login` endpoint is a POST endpoint that allows users to authenticate in th
 
 ![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/after.png)
 
+## Bug reporting and solving with pull requests
+
+#### While we were working on our project, we first had this bug
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/bug.png)
+
+#### Following this report, we solved this issues through the following pull requests.
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/pullreq.png)
+
+## Code comments
+
+#### In our code, we made sure to add comments to important parts to make sure that it's easy to understand and follow through when other people are looking through our code.
+
+#### Below are a few screenshots of such cases.
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/commentfrontend.png)
+
+#### For the frontend of our project
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/commentbackend.png)
+
+#### For the backend of our project
