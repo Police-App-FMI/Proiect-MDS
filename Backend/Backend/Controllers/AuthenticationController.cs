@@ -114,6 +114,11 @@ namespace Backend.Controllers
                             .FirstOrDefaultAsync();
                 if (user != null && VerifyPassword(model.password, user.password))
                 {
+                    // Sigleton pattern
+                    if (user.IsOnline)
+                    {
+                        return Unauthorized(new { message = "User is already logged in on another divice!" });
+                    }
                     // Generarea token-ului JWT
                     var token = _JwtToken.GenerateToken(user);
 
@@ -141,6 +146,11 @@ namespace Backend.Controllers
                 var user = _userService.GetUserByUsername(model.input);
                 if (user != null && VerifyPassword(model.password, user.password))
                 {
+                    // Sigleton pattern
+                    if (user.IsOnline)
+                    {
+                        return Unauthorized(new { message = "User is already logged in on another divice!" });
+                    }
                     // Generarea token-ului JWT
                     var token = _JwtToken.GenerateToken(user);
 
