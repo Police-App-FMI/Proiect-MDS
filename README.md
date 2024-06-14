@@ -446,3 +446,60 @@ This screen displays the location of a missing person using Google Maps.
 - **Google Map**: Displays the map with a marker at the missing person's location.
 - **Search Area Circle**: Represents a circular area around the missing person's location for search purposes.
 
+## Design patterns 
+
+## Overview
+The `/login` endpoint is a POST endpoint that allows users to authenticate in the application. It implements a Singleton design pattern to prevent a user from being logged in on multiple devices simultaneously.
+
+## Functionality
+1. **Input Verification:** Depending on the input provided (email or username), the endpoint determines how to verify the user's authentication.
+2. **Password Verification:** The provided password is compared with the password stored in the database for the respective user.
+3. **Singleton Pattern:** If the user is already authenticated on another device (`user.IsOnline` is `true`), the authentication is denied.
+4. **JWT Token Generation:** If the authentication is successful, a JWT token is generated for the user.
+5. **User State Update:** The user's state is updated to reflect that they are now online, and the information is saved in the database.
+
+## Implementation Details
+
+### Input Verification (Email or Username)
+- If `model.input` contains an `@` symbol, it is assumed to be an email.
+  - The user is searched in the database using the email.
+- If `model.input` does not contain `@`, it is assumed to be a username.
+  - The user is searched using the `_userService.GetUserByUsername` service.
+
+### Password Verification
+- The `VerifyPassword` function is used to compare the provided password (`model.password`) with the password stored in the database.
+
+### Singleton Pattern
+- If `user.IsOnline` is `true`, the endpoint returns an `Unauthorized` response with a message indicating that the user is already logged in on another device.
+
+### JWT Token Generation
+- The `_JwtToken.GenerateToken(user)` function is used to generate a JWT token for the user.
+  - The JWT token is used for subsequent authentication in the application.
+
+### User State Update
+- The last active date (`user.lastActive`) is updated to the current date and time.
+- The user's online status (`user.IsOnline`) is set to `true`.
+- The changes are saved in the database using `_backendcontext.Users.Update(user)` and `await _backendcontext.SaveChangesAsync()`.
+
+## Response Structure
+
+### Successful Authentication
+- **Status:** 200 OK
+- **Content:**
+  ```json
+  {
+    "Nume": "nume",
+    "ProfilePic": "profile_pic",
+    "Email": "email",
+    "Token": "token_jwt"
+  }
+
+## ChatGPT
+
+### For our project ChatGPT and other language models to make our workflow more efficient. For example, when we had a quick problem, we asked ChatGPT for a solution and went from there.
+
+### Below is an example of how we started to implement the Google Maps API for the multiple screens that used it. We asked ChatGPT for it's input and the solution worked well.
+
+![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/chatgpt_screenshot.png)
+
+
