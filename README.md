@@ -29,10 +29,6 @@ PoliceSoft is a mobile application designed to enhance the efficiency and effect
 - In the case of a car chase, the officer can check who the car belongs to and see information related to the driver.
 - The officer can use the application to see possible vehicles of a fugitive, preventing their escape.
 
-## App demo[^](https://youtu.be/nTvU5FMcFx0)
-
-Aici este incarcat demo-ul nostru.👆
-
 ## The Backend API
 
 Welcome to our project! Firstly, we will talk a bit about the backend API for our mobile application. The API is designed to interact with a database that includes the following tables:
@@ -541,3 +537,7 @@ The `/login` endpoint is a POST endpoint that allows users to authenticate in th
 ![Not Found!](https://github.com/Police-App-FMI/Proiect-MDS/blob/main/ReadMePhotos/commentbackend.png)
 
 #### For the backend of our project
+
+## App Demo[^](https://youtu.be/nTvU5FMcFx0)
+
+Aici este incarcat demo-ul nostru: [youtube link](https://youtu.be/nTvU5FMcFx0)
